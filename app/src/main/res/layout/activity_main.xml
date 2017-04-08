@@ -6,29 +6,47 @@
     android:layout_height="match_parent"
     tools:context="com.liisa.chatbotapp.MainActivity">
 
-    <android.support.v7.widget.AppCompatImageButton
-        android:id="@+id/sendButton"
-        android:layout_width="wrap_content"
-        android:layout_height="495dp"
-        android:background="@null"
-        android:elevation="0dp"
-        android:paddingLeft="10dp"
-        android:scaleType="fitCenter"
-        android:src="@drawable/send"
-        tools:layout_editor_absoluteY="8dp"
-        tools:layout_editor_absoluteX="0dp" />
-
 
     <EditText
-        android:id="@+id/message"
+        android:id="@+id/ChatLog"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_weight="3"
         android:background="@null"
-        android:hint="Chat with me!"
+        android:hint="Chatlog"
         android:lines="1"
         android:paddingLeft="10dp"
-        tools:layout_editor_absoluteY="8dp"
-        tools:layout_editor_absoluteX="0dp" />
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="8dp" />
+
+    <EditText
+        android:id="@+id/messageInput"
+        android:layout_width="348dp"
+        android:layout_height="40dp"
+        android:contentDescription=" "
+        android:ems="10"
+        android:hint="Write a message Yourself"
+        android:inputType="textMultiLine"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="495dp" />
+
+    <ToggleButton
+        android:id="@+id/botOnOff"
+        android:layout_width="408dp"
+        android:layout_height="44dp"
+        android:text="ToggleButton"
+        android:textOff="Bot inactive"
+        android:textOn="Bot active"
+        tools:layout_editor_absoluteX="1dp"
+        tools:layout_editor_absoluteY="448dp" />
+
+
+    <Button
+        android:id="@+id/sendMessageButton"
+        android:layout_width="43dp"
+        android:layout_height="45dp"
+        android:background="@drawable/send"
+        tools:layout_editor_absoluteX="358dp"
+        tools:layout_editor_absoluteY="496dp" />
 
 </android.support.constraint.ConstraintLayout>
