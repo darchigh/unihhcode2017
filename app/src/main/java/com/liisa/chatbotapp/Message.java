@@ -3,27 +3,16 @@ package com.liisa.chatbotapp;
 /**
  * Created by liisa_000 on 08/04/2017.
  */
-
 import java.io.Serializable;
-
-/**
- * Created by VMac on 17/11/16.
- */
-
-        import java.io.Serializable;
 
 public class Message implements Serializable {
     String id, message;
-
-
     public Message() {
     }
 
-    public Message(String id, String message, String createdAt) {
+    public Message(String id, String message) {
         this.id = id;
         this.message = message;
-
-
     }
 
     public String getId() {
@@ -44,4 +33,3 @@ public class Message implements Serializable {
 
 
 }
-
