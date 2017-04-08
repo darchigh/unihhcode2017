@@ -22,7 +22,7 @@ public class MainActivity extends AppCompatActivity {
     private EditText editMessage;
     private ArrayList messageArrayList;
     private ImageButton btnSend;
-    private Map<String,Object> context = new HashMap<>();
+    private Map<String, Object> context = new HashMap<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void sendMessage() {
-      final String inputMessage  = this.editMessage.getText().toString().trim();
+        final String inputMessage = this.editMessage.getText().toString().trim();
         Message imessage = new Message();
         imessage.setMessage(inputMessage);
         imessage.setId("1");
@@ -51,14 +51,23 @@ public class MainActivity extends AppCompatActivity {
         MessageRequest newMessage = new MessageRequest.Builder().inputText(inputMessage).context(context).build();
         MessageResponse response = service.message(workspace_id, newMessage).execute();
 
-        if(response.getContext() !=null)
-        {
+        if (response.getContext() != null) {
             context.clear();
             context = response.getContext();
 
         }
-        Message outMessage=new Message();
+        Message outMessage = new Message();
+        if (response != null) {
+            if (response.getOutput() != null && response.getOutput().containsKey("text")) {
 
+                ArrayList responseList = (ArrayList) response.getOutput().get("text");
+                if (null != responseList && responseList.size() > 0) {
+                    outMessage.setMessage((String) responseList.get(0));
+                    outMessage.setId("2");
+                }
+                messageArrayList.add(outMessage);
+            }
 
         }
-        }
+    }
+}
