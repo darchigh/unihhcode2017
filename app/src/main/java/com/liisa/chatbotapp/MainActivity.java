@@ -61,10 +61,10 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 sendMessage();
+                editMessage.setText("");
             }
         });
     }
-
     private void sendMessage() {
         final String inputMessage = this.editMessage.getText().toString().trim();
         Message imessage = new Message();
@@ -104,21 +104,15 @@ public class MainActivity extends AppCompatActivity {
                                 mAdapter.notifyDataSetChanged();
                                 if (mAdapter.getItemCount() > 1) {
                                     recyclerView.getLayoutManager().smoothScrollToPosition(recyclerView, null, mAdapter.getItemCount() - 1);
-
                                 }
-
                             }
                         });
-
-
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
         });
-
         thread.start();
-
     }
 }
