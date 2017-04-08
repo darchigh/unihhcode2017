@@ -1,12 +1,19 @@
 package com.liisa.chatbotapp;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
+
+import com.chatbotapp.MambaWebApi;
+import com.chatbotapp.mambaObj.SearchResult;
+import com.chatbotapp.mambaObj.User;
 
 import java.util.ArrayList;
 

@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">ChatbotApp</string>
+    <string name="log_tag">chatboxApp</string>
+    <string name="cookie">dfsdfs</string>
 </resources>
