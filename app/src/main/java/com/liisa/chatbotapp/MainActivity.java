@@ -31,5 +31,11 @@ public class MainActivity extends AppCompatActivity {
         inputMessage = (EditText) findViewById(R.id.message);
         btnSend = (ImageButton) findViewById(R.id.sendButton);
     }
+
+    private void sendMessage() {
+        final String inputmessage = this.inputMessage.getText().toString().trim();
+        Message inputMessage = new Message();
+
+    }
 }
 
