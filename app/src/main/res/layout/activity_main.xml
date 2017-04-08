@@ -1,34 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
     tools:context="com.liisa.chatbotapp.MainActivity">
 
-    <android.support.v7.widget.AppCompatImageButton
-        android:id="@+id/sendButton"
-        android:layout_width="wrap_content"
-        android:layout_height="495dp"
-        android:background="@null"
-        android:elevation="0dp"
-        android:paddingLeft="10dp"
-        android:scaleType="fitCenter"
-        android:src="@drawable/send"
-        tools:layout_editor_absoluteY="8dp"
-        tools:layout_editor_absoluteX="0dp" />
 
-
-    <EditText
-        android:id="@+id/message"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_weight="3"
-        android:background="@null"
-        android:hint="Chat with me!"
-        android:lines="1"
-        android:paddingLeft="10dp"
-        tools:layout_editor_absoluteY="8dp"
-        tools:layout_editor_absoluteX="0dp" />
-
-</android.support.constraint.ConstraintLayout>
+    <include layout="@layout/content" />
+</android.support.design.widget.CoordinatorLayout>
