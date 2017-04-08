@@ -1,0 +1,285 @@
+{
+	"variables": [],
+	"info": {
+		"name": "Mamba ",
+		"_postman_id": "33a4fadf-e598-217a-1671-c9850674be1f",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "get Photos?",
+			"request": {
+				"url": "api.mobile-api.ru/v5.2.38.0/users/996784956/albums/996786140/photos/?limit=12&offset=0&langId=de&dateType=timestamp HTTP/1.1",
+				"method": "GET",
+				"header": [
+					{
+						"key": "Cookie",
+						"value": "real_promo_1745679977=show; mmbsid=aaKUzqHDmeRcp4UjS70narJVhMWrMWJ0_20170408142902_api.mobile-api.ru; start_with_auth_form=1; s_post=H4vCKFrbL7ITY7PMPpJ2TBVIwPiQT6TQ; unauth_lang=5; LOGIN=mb1745679977; registered_once=1; return_token=wAf2T0zJMmKIxc3SXxGT85h0BXJg4WkR",
+						"description": ""
+					},
+					{
+						"key": "User-Agent",
+						"value": "okhttp/2.2.0",
+						"description": ""
+					}
+				],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "getChat",
+			"request": {
+				"url": "api.mobile-api.ru/v5.2.38.0/users/996784956/chat/?limit=20&offset=0&langId=de&dateType=timestamp HTTP/1.1",
+				"method": "GET",
+				"header": [
+					{
+						"key": "Cookie",
+						"value": "real_promo_1745679977=show; mmbsid=aaKUzqHDmeRcp4UjS70narJVhMWrMWJ0_20170408142902_api.mobile-api.ru; start_with_auth_form=1; s_post=H4vCKFrbL7ITY7PMPpJ2TBVIwPiQT6TQ; unauth_lang=5; LOGIN=mb1745679977; registered_once=1; return_token=wAf2T0zJMmKIxc3SXxGT85h0BXJg4WkR",
+						"description": ""
+					},
+					{
+						"key": "User-Agent",
+						"value": "okhttp/2.2.0",
+						"description": ""
+					}
+				],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "put search  users",
+			"request": {
+				"url": "https://api.mobile-api.ru/v5.2.38.0/search/?langId=de&dateType=timestamp",
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Cookie",
+						"value": "real_promo_1745679977=show; mmbsid=aaKUzqHDmeRcp4UjS70narJVhMWrMWJ0_20170408142902_api.mobile-api.ru; start_with_auth_form=1; s_post=H4vCKFrbL7ITY7PMPpJ2TBVIwPiQT6TQ; unauth_lang=5; LOGIN=mb1745679977; registered_once=1; return_token=tYezMB4S5UHJAkdUSQSozM8NE0RPpT1Q",
+						"description": ""
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json; charset=UTF-8",
+						"description": ""
+					},
+					{
+						"key": "//Content-Length",
+						"value": "234",
+						"description": "",
+						"disabled": true
+					},
+					{
+						"key": "Host",
+						"value": "api.mobile-api.ru",
+						"description": ""
+					},
+					{
+						"key": "Connection",
+						"value": "close",
+						"description": ""
+					},
+					{
+						"key": "User-Agent",
+						"value": "okhttp/2.2.0",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\\\"filter\\\":\\\"active\\\",\\\"search\\\":\\\"\\\",\\\"limit\\\":40,\\\"dateType\\\":\\\"timestamp\\\",\\\"lang_id\\\":\\\"de\\\",\\\"lat\\\":53.599815,\\\"lng\\\":9.933121}"
+				},
+				"description": "search workflow 1"
+			},
+			"response": []
+		},
+		{
+			"name": "getPromo",
+			"request": {
+				"url": "https://api.mobile-api.ru/v5.2.38.0/promo/?langId=de&dateType=timestamp",
+				"method": "GET",
+				"header": [
+					{
+						"key": "User-Agent",
+						"value": "okhttp/2.2.0",
+						"description": ""
+					},
+					{
+						"key": "Cookie",
+						"value": "real_promo_1745679977=show; mmbsid=aaKUzqHDmeRcp4UjS70narJVhMWrMWJ0_20170408142902_api.mobile-api.ru; start_with_auth_form=1; s_post=H4vCKFrbL7ITY7PMPpJ2TBVIwPiQT6TQ; unauth_lang=5; LOGIN=mb1745679977; registered_once=1; return_token=zyc9GzoCbVqEF4PbTm9LPm61oPek1lSA",
+						"description": ""
+					}
+				],
+				"body": {},
+				"description": "get Promo -> search refresh workflow"
+			},
+			"response": []
+		},
+		{
+			"name": "search form config",
+			"request": {
+				"url": "https://api.mobile-api.ru/v5.2.38.0/search/form/?langId=de&dateType=timestamp",
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					},
+					{
+						"key": "User-Agent",
+						"value": "okhttp/2.2.0",
+						"description": ""
+					},
+					{
+						"key": "Cookie",
+						"value": "real_promo_1745679977=show; mmbsid=aaKUzqHDmeRcp4UjS70narJVhMWrMWJ0_20170408142902_api.mobile-api.ru; start_with_auth_form=1; s_post=H4vCKFrbL7ITY7PMPpJ2TBVIwPiQT6TQ; unauth_lang=5; LOGIN=mb1745679977; registered_once=1; return_token=wMxQ6NM450y2HNy2xQ4y0SplBdInp1RK",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"filter\":\"active\"}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "getContactsAll",
+			"request": {
+				"url": "https://api.mobile-api.ru/v5.2.38.0/contacts/all/?status=all&limit=20&offset=0&lastMessage=true&langId=de&dateType=timestamp",
+				"method": "GET",
+				"header": [
+					{
+						"key": "User-Agent",
+						"value": "okhttp/2.2.0",
+						"description": ""
+					}
+				],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "folders",
+			"request": {
+				"url": "https://api.mobile-api.ru/v5.2.38.0/folders/?langId=de&dateType=timestamp",
+				"method": "GET",
+				"header": [
+					{
+						"key": "User-Agent",
+						"value": "okhttp/2.2.0",
+						"description": ""
+					}
+				],
+				"body": {},
+				"description": "Generated from a curl request: \ncurl -i -s -k  -X $'GET' \\\n    -H $'User-Agent: okhttp/2.2.0' \\\n    -b $'real_promo_1745679977=show; mmbsid=aaKUzqHDmeRcp4UjS70narJVhMWrMWJ0_20170408142902_api.mobile-api.ru; start_with_auth_form=1; s_post=H4vCKFrbL7ITY7PMPpJ2TBVIwPiQT6TQ; unauth_lang=5; LOGIN=mb1745679977; registered_once=1; return_token=gjSakylOyUtPlY3J1spDRw9wBCHzmrHk' \\\n    $'https://api.mobile-api.ru/v5.2.38.0/folders/?langId=de&dateType=timestamp'"
+			},
+			"response": []
+		},
+		{
+			"name": "profiles/my/search",
+			"request": {
+				"url": "http://api.mobile-api.ru/v6/profiles/my/search/place/?_loc%5Blocale%5D=de_DE",
+				"method": "GET",
+				"header": [
+					{
+						"key": "Mamba-Client",
+						"value": "{\\\"brand\\\":\\\"Mamba\\\",\\\"build\\\":38,\\\"platform\\\":\\\"Android\\\"}",
+						"description": ""
+					},
+					{
+						"key": "Qapibara-Feature-Flags",
+						"value": "[\\\"wrapResponseInObject\\\"]",
+						"description": ""
+					},
+					{
+						"key": "Csrf-Token",
+						"value": "H4vCKFrbL7ITY7PMPpJ2TBVIwPiQT6TQ",
+						"description": ""
+					},
+					{
+						"key": "User-Agent",
+						"value": "okhttp/2.2.0",
+						"description": ""
+					}
+				],
+				"body": {},
+				"description": "Generated from a curl request: \ncurl -i -s -k  -X $'GET' \\\n    -H $'Mamba-Client: {\\\\\"brand\\\\\":\\\\\"Mamba\\\\\",\\\\\"build\\\\\":38,\\\\\"platform\\\\\":\\\\\"Android\\\\\"}' -H $'Qapibara-Feature-Flags: [\\\\\"wrapResponseInObject\\\\\"]' -H $'Csrf-Token: H4vCKFrbL7ITY7PMPpJ2TBVIwPiQT6TQ' -H $'User-Agent: okhttp/2.2.0' \\\n    -b $'real_promo_1745679977=show; mmbsid=aaKUzqHDmeRcp4UjS70narJVhMWrMWJ0_20170408142902_api.mobile-api.ru; start_with_auth_form=1; s_post=H4vCKFrbL7ITY7PMPpJ2TBVIwPiQT6TQ; unauth_lang=5; LOGIN=mb1745679977; registered_once=1; return_token=qOnJ2Yu8M2v44BST8SblaUo3x9q0nBix' \\\n    $'http://api.mobile-api.ru/v6/profiles/my/search/place/?_loc%5Blocale%5D=de_DE'"
+			},
+			"response": []
+		},
+		{
+			"name": "complaint",
+			"request": {
+				"url": "http://api.mobile-api.ru/v6/complaints/state/996784956/anketa/?_loc%5Blocale%5D=de_DE",
+				"method": "GET",
+				"header": [
+					{
+						"key": "Mamba-Client",
+						"value": "{\\\"brand\\\":\\\"Mamba\\\",\\\"build\\\":38,\\\"platform\\\":\\\"Android\\\"}",
+						"description": ""
+					},
+					{
+						"key": "Qapibara-Feature-Flags",
+						"value": "[\\\"wrapResponseInObject\\\"]",
+						"description": ""
+					},
+					{
+						"key": "Csrf-Token",
+						"value": "H4vCKFrbL7ITY7PMPpJ2TBVIwPiQT6TQ",
+						"description": ""
+					},
+					{
+						"key": "User-Agent",
+						"value": "okhttp/2.2.0",
+						"description": ""
+					}
+				],
+				"body": {},
+				"description": "Generated from a curl request: \ncurl -i -s -k  -X $'GET' \\\n    -H $'Mamba-Client: {\\\\\"brand\\\\\":\\\\\"Mamba\\\\\",\\\\\"build\\\\\":38,\\\\\"platform\\\\\":\\\\\"Android\\\\\"}' -H $'Qapibara-Feature-Flags: [\\\\\"wrapResponseInObject\\\\\"]' -H $'Csrf-Token: H4vCKFrbL7ITY7PMPpJ2TBVIwPiQT6TQ' -H $'User-Agent: okhttp/2.2.0' \\\n    -b $'real_promo_1745679977=show; mmbsid=aaKUzqHDmeRcp4UjS70narJVhMWrMWJ0_20170408142902_api.mobile-api.ru; start_with_auth_form=1; s_post=H4vCKFrbL7ITY7PMPpJ2TBVIwPiQT6TQ; unauth_lang=5; LOGIN=mb1745679977; registered_once=1; return_token=IIwgJbaOZfCOq0BTMHLlzTOvPel4r0d6' \\\n    $'http://api.mobile-api.ru/v6/complaints/state/996784956/anketa/?_loc%5Blocale%5D=de_DE'"
+			},
+			"response": []
+		},
+		{
+			"name": "users/x/",
+			"request": {
+				"url": "https://api.mobile-api.ru/v5.2.38.0/users/996784956/?makeHit=false&langId=de&dateType=timestamp",
+				"method": "GET",
+				"header": [
+					{
+						"key": "User-Agent",
+						"value": "okhttp/2.2.0",
+						"description": ""
+					}
+				],
+				"body": {},
+				"description": "Generated from a curl request: \ncurl -i -s -k  -X $'GET' \\\n    -H $'User-Agent: okhttp/2.2.0' \\\n    -b $'real_promo_1745679977=show; mmbsid=aaKUzqHDmeRcp4UjS70narJVhMWrMWJ0_20170408142902_api.mobile-api.ru; start_with_auth_form=1; s_post=H4vCKFrbL7ITY7PMPpJ2TBVIwPiQT6TQ; unauth_lang=5; LOGIN=mb1745679977; registered_once=1; return_token=IIwgJbaOZfCOq0BTMHLlzTOvPel4r0d6' \\\n    $'https://api.mobile-api.ru/v5.2.38.0/users/996784956/?makeHit=false&langId=de&dateType=timestamp'"
+			},
+			"response": []
+		},
+		{
+			"name": "users/x/chat",
+			"request": {
+				"url": "https://api.mobile-api.ru/v5.2.38.0/users/996784956/chat/?limit=20&offset=0&langId=de&dateType=timestamp",
+				"method": "GET",
+				"header": [
+					{
+						"key": "User-Agent",
+						"value": "okhttp/2.2.0",
+						"description": ""
+					}
+				],
+				"body": {},
+				"description": "Generated from a curl request: \ncurl -i -s -k  -X $'GET' \\\n    -H $'User-Agent: okhttp/2.2.0' \\\n    -b $'real_promo_1745679977=show; mmbsid=aaKUzqHDmeRcp4UjS70narJVhMWrMWJ0_20170408142902_api.mobile-api.ru; start_with_auth_form=1; s_post=H4vCKFrbL7ITY7PMPpJ2TBVIwPiQT6TQ; unauth_lang=5; LOGIN=mb1745679977; registered_once=1; return_token=IIwgJbaOZfCOq0BTMHLlzTOvPel4r0d6' \\\n    $'https://api.mobile-api.ru/v5.2.38.0/users/996784956/chat/?limit=20&offset=0&langId=de&dateType=timestamp'"
+			},
+			"response": []
+		}
+	]
+}
