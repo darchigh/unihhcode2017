@@ -1,52 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
     tools:context="com.liisa.chatbotapp.MainActivity">
 
 
-    <EditText
-        android:id="@+id/ChatLog"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_weight="3"
-        android:background="@null"
-        android:hint="Chatlog"
-        android:lines="1"
-        android:paddingLeft="10dp"
-        tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="8dp" />
-
-    <EditText
-        android:id="@+id/messageInput"
-        android:layout_width="348dp"
-        android:layout_height="40dp"
-        android:contentDescription=" "
-        android:ems="10"
-        android:hint="Write a message Yourself"
-        android:inputType="textMultiLine"
-        tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="495dp" />
-
-    <ToggleButton
-        android:id="@+id/botOnOff"
-        android:layout_width="408dp"
-        android:layout_height="44dp"
-        android:text="ToggleButton"
-        android:textOff="Bot inactive"
-        android:textOn="Bot active"
-        tools:layout_editor_absoluteX="1dp"
-        tools:layout_editor_absoluteY="448dp" />
-
-
-    <Button
-        android:id="@+id/sendMessageButton"
-        android:layout_width="43dp"
-        android:layout_height="45dp"
-        android:background="@drawable/send"
-        tools:layout_editor_absoluteX="358dp"
-        tools:layout_editor_absoluteY="496dp" />
-
-</android.support.constraint.ConstraintLayout>
+    <include layout="@layout/content" />
+</android.support.design.widget.CoordinatorLayout>
