@@ -28,7 +28,6 @@ import java.util.Map;
 public class MainActivity extends AppCompatActivity {
 
     private RecyclerView recyclerView;
-    private static final String LOG_TAG = "bla";
     private Context mContext;
     private String workspace_id;
     private Recycler mAdapter;
@@ -57,8 +56,10 @@ public class MainActivity extends AppCompatActivity {
         recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
         messageArrayList = new ArrayList<>();
         mAdapter = new Recycler(messageArrayList);
+
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         layoutManager.setStackFromEnd(true);
+
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(mAdapter);
@@ -86,8 +87,7 @@ public class MainActivity extends AppCompatActivity {
                     service.setUsernameAndPassword(conversation_username, conversation_password);
                     MessageRequest newMessage = new MessageRequest.Builder().inputText(inputMessage).context(context).build();
                     MessageResponse response = service.message(workspace_id, newMessage).execute();
-                    Log.d(LOG_TAG, "Item created successfully");
-
+                    //Thread.sleep(10000);
                     if (response.getContext() != null) {
                         context.clear();
                         context = response.getContext();
