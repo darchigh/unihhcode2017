@@ -38,8 +38,6 @@ public class MainActivity extends AppCompatActivity{
 
     Button comeToChatView;
     ArrayList<Message> myListItems  = new ArrayList<>();
-    //String[] mobileArray = {"Android","IPhone","WindowsMobile","Blackberry",
-    //       "WebOS","Ubuntu","Windows7","Max OS X"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,21 +73,6 @@ public class MainActivity extends AppCompatActivity{
         });
     }
 }
-//
-//        listOfMessages.setOnItemClickListener(new AdapterView.OnItemClickListener(){
-//            @Override
-//            public void onItemClick(AdapterView<?>adapter,View v, int position){
-//                ItemClicked item = adapter.getItemAtPosition(position);
-//
-//                Intent intent = new Intent(MainActivity.this,ChatActivity.class);
-//                //based on item add info to intent
-//                startActivity(intent);
-//            }
-//        });
-//
-//        public ItemClicked getItem(int position){
-//            return myListItems.get(position);
-//        }
 
 
 
