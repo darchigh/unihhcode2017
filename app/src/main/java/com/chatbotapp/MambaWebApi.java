@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.content.res.Resources;
 import android.util.Log;
 
+import com.chatbotapp.mambaObj.ChatMessage;
+import com.chatbotapp.mambaObj.ChatMessages;
 import com.chatbotapp.mambaObj.SearchResult;
 import com.chatbotapp.mambaObj.User;
 import com.google.gson.Gson;
@@ -12,7 +14,9 @@ import com.liisa.chatbotapp.R;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
+import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.List;
 
 import javax.net.ssl.HttpsURLConnection;
 
@@ -25,7 +29,8 @@ public class MambaWebApi {
     private static final Gson GSON = new Gson();
 
     private static final String DEFAULT_HOST = "api.mobile-api.ru";
-    private static final String DEFAULT_URL_PARAMETER = "?langId=de&dateType=timestamp";
+
+    private static final String DEFAULT_PARAMETER = "langId=de&dateType=timestamp";
 
     private static final String CREATE_REQ = "POST";
     private static final String READ_REQ = "GET";
@@ -40,32 +45,50 @@ public class MambaWebApi {
 
 
 /**
-        double DEFAULT_LAT = 53.599815d;
-        double DEFAULT_LON = 9.933121d;
+ double DEFAULT_LAT = 53.599815d;
+ double DEFAULT_LON = 9.933121d;
 
-        try {
-            MambaWebApi api = new MambaWebApi(this);
-            api.setCookie("dslkklkfdsfdslkfdslk");
+ try {
+ MambaWebApi api = new MambaWebApi(this);
+ api.setCookie("dslkklkfdsfdslkfdslk");
 
-            api.search("active", "nath", DEFAULT_LAT, DEFAULT_LON, new MambaWebApi.IResponse<SearchResult>() {
-                @Override
-                public void doResponse(SearchResult result) {
-                    for(User user : result.getUsers()) {
-                        Log.d(getString(R.string.log_tag), user.getName() + " --> " +  user.toString());
-                    }
+ api.search("active", "nath", DEFAULT_LAT, DEFAULT_LON, new MambaWebApi.IResponse<SearchResult>() {
+@Override public void doResponse(SearchResult result) {
+for(User user : result.getUsers()) {
+Log.d(getString(R.string.log_tag), user.getName() + " --> " +  user.toString());
+}
 
-                }
-            });
-        } catch (Exception e) {
-        }
-   */
+}
+});
+ } catch (Exception e) {
+ }
+ */
     }
 
-    /**
-     * Search-Anfrage mit
-     *
-     * @return
-     */
+
+    public void getChat(String userId, IResponse<ChatMessages> response)  throws Exception {
+        getChat(userId, 20, 0,response); // Default values from the request.
+    }
+
+
+    public void getChat(String userId, int limit, int offset,IResponse<ChatMessages> response) throws Exception {
+        try {
+            StringBuilder url = new StringBuilder();
+            url.append("v5.2.38.0/");
+            url.append("users/").append(userId).append("/chat/");
+            url.append("?limit=").append(limit);
+            url.append("&offset=").append(offset);
+            url.append("&").append(DEFAULT_PARAMETER);
+
+            query(response, ChatMessages.class, READ_REQ, url.toString(), "");
+        } catch (Exception e) {
+            Log.e(Resources.getSystem().getString(R.string.log_tag),
+                    "Failed to generate the result of a getChat-request.", e);
+            throw e;
+        }
+    }
+
+
     public void search(String filter, String search, double lat, double lon, IResponse<SearchResult> response) throws Exception {
         try {
             StringBuilder data = new StringBuilder();
@@ -79,7 +102,10 @@ public class MambaWebApi {
             data.append("   'dateType': 'timestamp'");
             data.append("}");
 
-            query(response, SearchResult.class, READ_REQ, "/v5.2.38.0/search/", data.toString());
+            StringBuilder url = new StringBuilder();
+            url.append("v5.2.38.0/search/").append("?").append(DEFAULT_PARAMETER);
+
+            query(response, SearchResult.class, READ_REQ, url.toString(), data.toString());
         } catch (Exception e) {
             Log.e(Resources.getSystem().getString(R.string.log_tag),
                     "Failed to generate the result of a search-request.", e);
@@ -89,7 +115,7 @@ public class MambaWebApi {
 
 
     private <T extends AResponse> void query(final IResponse<T> response,
-                                             final Class<T > resultClass,
+                                             final Class<T> resultClass,
                                              final String reqMethod,
                                              final String urlParams,
                                              final String data) throws Exception {
@@ -105,27 +131,25 @@ public class MambaWebApi {
                 OutputStreamWriter request = null;
                 StringBuilder sb = new StringBuilder();
 
-
                 try {
-                    String fullUrl = "https://" + DEFAULT_HOST + (urlParams == null ? "" : urlParams) + DEFAULT_URL_PARAMETER;
-                    Log.d(act.getString(R.string.log_tag),
-                            "Send query to '" + fullUrl + "'...");
+                    String fullUrl = "https://" + DEFAULT_HOST + "/" + (urlParams == null ? "" : urlParams);
+                    Log.d(act.getString(R.string.log_tag), "Send query to '" + fullUrl + "'...");
 
                     connection = (HttpsURLConnection) new URL(fullUrl).openConnection();
-                    connection.setDoOutput(true);
                     connection.setRequestProperty("Cookie", cookie);
                     connection.setRequestProperty("Host", DEFAULT_HOST);
                     connection.setRequestProperty("User-Agent", "okhttp/2.2.0");
                     connection.setRequestProperty("Content-Type", "application/json");
 
-                    if (data != null && !data.isEmpty())
-                        connection.setRequestProperty("Content-Length", String.valueOf(data.length()));
+                    if (data != null && !data.isEmpty() ) {
+                        connection.setRequestProperty("Content-Length",  String.valueOf(data.length()));
+                    }
 
                     connection.setRequestMethod(reqMethod);
 
-                    request = new OutputStreamWriter(connection.getOutputStream());
 
                     if (data != null && !data.isEmpty()) {
+                        request = new OutputStreamWriter(connection.getOutputStream());
                         request.write(data);
                         request.flush();
                         request.close();
@@ -173,7 +197,7 @@ public class MambaWebApi {
                     throw e;
                 }
 
-                response.doResponse((T)result);
+                response.doResponse((T) result);
             }
         }).start();
     }
