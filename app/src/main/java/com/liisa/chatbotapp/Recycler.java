@@ -24,29 +24,10 @@ public class Recycler extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView;
-
-        // view type is to identify where to render the chat message
-        // left or right
-       // if (viewType == SELF) {
-            // self message
-          //  itemView = LayoutInflater.from(parent.getContext())
-            //        .inflate(R.layout.chat_item_self, parent, false);
-        //} else {
-            // WatBot message
             itemView = LayoutInflater.from(parent.getContext())
                     .inflate(R.layout.chat_item, parent, false);
 
         return new ViewHolder(itemView);
-    }
-
-    @Override
-    public int getItemViewType(int position) {
-        Message message = messageArrayList.get(position);
-     //   if (message.getId().equals("1")) {
-           // return SELF;
-       // }
-
-        return position;
     }
 
     @Override
@@ -67,14 +48,7 @@ public class Recycler extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         public ViewHolder(View view) {
             super(view);
             message = (TextView) itemView.findViewById(R.id.message);
-
-            //TODO: Uncomment this if you want to use a custom Font
-            /*String customFont = "Montserrat-Regular.ttf";
-            Typeface typeface = Typeface.createFromAsset(itemView.getContext().getAssets(), customFont);
-            message.setTypeface(typeface);*/
-
         }
+
     }
-
-
 }
