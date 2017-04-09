@@ -1,6 +1,5 @@
 package com.liisa.chatbotapp;
 
-<<<<<<< HEAD
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -19,7 +18,6 @@ import com.ibm.mobilefirstplatform.clientsdk.android.core.api.BMSClient;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-=======
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -29,7 +27,6 @@ import android.widget.Button;
 /**
  * Created by liisa_000 on 09/04/2017.
  */
->>>>>>> 7c6bfa88950e0bf127bb30ad3700b4d5c30f5a1c
 
 public class MainActivity extends AppCompatActivity{
 
