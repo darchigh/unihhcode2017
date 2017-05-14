@@ -1,8 +1,11 @@
 package com.liisa.chatbotapp;
 
 import com.chatbotapp.MambaWebApi;
+import com.chatbotapp.mambaObj.ChatAcknowledge;
 import com.chatbotapp.mambaObj.ChatMessage;
 import com.chatbotapp.mambaObj.ChatMessages;
+import com.chatbotapp.mambaObj.Contact;
+import com.chatbotapp.mambaObj.Contacts;
 import com.chatbotapp.mambaObj.Logon;
 import com.chatbotapp.mambaObj.SearchResult;
 import com.chatbotapp.mambaObj.User;
@@ -21,7 +24,7 @@ public class ExampleUnitTest {
     private final static MambaWebApi api = new MambaWebApi(new MambaWebApi.ILog() {
         @Override
         public void l(LogLevel level, String message, Exception e) {
-            System.out.println(level.toString() + ": " + message +  (e == null ? "" : "; Exception: " + e.toString()));
+            System.out.println(level.toString() + ": " + message + (e == null ? "" : "; Exception: " + e.toString()));
         }
     });
 
@@ -56,10 +59,41 @@ public class ExampleUnitTest {
     }
 
     @Test
-    public void addition_isCorrect() throws Exception {
-        api.getChat("1189599593", new MambaWebApi.IResponse<ChatMessages>() {
+    public void getAllContacts() throws Exception {
+        api.getContacts(new MambaWebApi.IResponse<Contacts>() {
+            @Override
+            public void doResponse(Contacts result) {
+                for (Contact contact : result.getContacts()) {
+                    System.out.println("User:");
+                    System.out.println("   " + contact.getAnketa().getUserId() + " " + contact.getAnketa().getName());
+                    System.out.println("   " + contact.getLastNessage().getMessage());
+                }
+
+
+            }
+        }).join();
+    }
+
+    @Test
+    public void sendMessage() throws Exception {
+       /* api.sendMessage("1392384820", "Hi, wie gehts?", new MambaWebApi.IResponse<ChatAcknowledge>() {
+            @Override
+            public void doResponse(ChatAcknowledge result) {
+
+            }
+        }).join();
+*/
+
+    }
+
+
+    @Test
+    public void getChat() throws Exception {
+        api.getChat("1392384820", new MambaWebApi.IResponse<ChatMessages>() {
             @Override
             public void doResponse(ChatMessages result) {
+                System.out.println("Chat mit " + result.getRecipient().getAnketa().getName());
+
                 for (ChatMessage message : result.getMessages()) {
                     System.out.println((message.isIncoming() ? "-->" : "<--") + " " + message.getMessage());
                 }

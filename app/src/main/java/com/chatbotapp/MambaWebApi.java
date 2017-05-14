@@ -1,9 +1,12 @@
 package com.chatbotapp;
 
 
+import com.chatbotapp.mambaObj.ChatAcknowledge;
 import com.chatbotapp.mambaObj.ChatMessages;
+import com.chatbotapp.mambaObj.Contacts;
 import com.chatbotapp.mambaObj.Logon;
 import com.chatbotapp.mambaObj.SearchResult;
+import com.chatbotapp.mambaObj.User;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -17,10 +20,11 @@ import java.util.concurrent.Semaphore;
 import javax.net.ssl.HttpsURLConnection;
 
 /**
- *
  * @author Alex
  */
 public class MambaWebApi {
+
+    public static final int DEFAULT_LIMIT = 20;
 
     private static final String DEFAULT_HOST = "api.mobile-api.ru";
 
@@ -117,7 +121,51 @@ Log.d(getString(R.string.log_tag), user.getName() + " --> " +  user.toString());
 
             result = query(response, Logon.class, CREATE_REQ, "v5.2.38.0/login/builder/", null, data);
         } catch (Exception e) {
-            log.l(ILog.LogLevel.error, "Failed to generate the result of a search-request.", e);
+            log.l(ILog.LogLevel.error, "Failed to generate the result of a logon-request.", e);
+            throw e;
+        }
+
+        return result;
+    }
+
+
+    public Thread sendMessage(String receiverId, String message, final IResponse<ChatAcknowledge> response) throws Exception {
+        Thread result = null;
+
+        try {
+            String data = "";
+            data += "{";
+            data += "   \"message\":\"" + message.replace('\"', '\'') + "\",";
+            data += "   \"dateType\":\"timestamp\",";
+            data += "   \"lang_id\":\"de\",";
+            data += "   \"lat\":0.0,";
+            data += "   \"lng\":0.0";
+            data += "}";
+
+            result = query(response, ChatAcknowledge.class, CREATE_REQ,
+                    "v5.2.38.0/users/" + receiverId + "/post/", null, data);
+        } catch (Exception e) {
+            log.l(ILog.LogLevel.error, "Failed to generate the result of a sendMessage-request.", e);
+            throw e;
+        }
+
+        return result;
+    }
+
+    public Thread getContacts(final IResponse<Contacts> response) throws Exception {
+        return getContacts(DEFAULT_LIMIT, 0, response);
+    }
+
+    public Thread getContacts(int limit, int offset, final IResponse<Contacts> response) throws Exception {
+        Thread result;
+
+        try {
+            result = query(response, Contacts.class, READ_REQ,
+                    "v5.2.38.0/contacts/all/",
+                    "?status=all&lastMessage=true&limit=" + limit + "&offset=" + offset,
+                    null);
+        } catch (Exception e) {
+            log.l(ILog.LogLevel.error, "Failed to generate the result of a getContacts-request.", e);
             throw e;
         }
 
@@ -126,7 +174,7 @@ Log.d(getString(R.string.log_tag), user.getName() + " --> " +  user.toString());
 
 
     public Thread getChat(String userId, final IResponse<ChatMessages> response) throws Exception {
-        return getChat(userId, 20, 0, response); // Default values from the request.
+        return getChat(userId, DEFAULT_LIMIT, 0, response); // Default values from the request.
     }
 
 
@@ -148,7 +196,7 @@ Log.d(getString(R.string.log_tag), user.getName() + " --> " +  user.toString());
 
 
     public Thread search(String filter, String search, double lat, double lon, final IResponse<SearchResult> response) throws Exception {
-        Thread result ;
+        Thread result;
 
         try {
             String data = "";
@@ -181,7 +229,7 @@ Log.d(getString(R.string.log_tag), user.getName() + " --> " +  user.toString());
         final Thread queryResult = new Thread(new Runnable() {
             @Override
             public void run() {
-                T result ;
+                T result;
                 HttpsURLConnection connection = null;
                 OutputStreamWriter request = null;
                 StringBuilder sb = new StringBuilder();
