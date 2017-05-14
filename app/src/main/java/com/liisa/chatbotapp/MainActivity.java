@@ -38,12 +38,14 @@ public class MainActivity extends AppCompatActivity{
 
     Button comeToChatView;
     ArrayList<Message> myListItems  = new ArrayList<>();
+    ImageButton statistics;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_selection);
         comeToChatView = (Button) findViewById(R.id.button);
+        statistics = (ImageButton) findViewById(R.id.statistics);
         myListItems.add(new Message("a","a"));
         ArrayAdapter adapter = new ArrayAdapter(this,R.layout.activity_listview,myListItems);
         final ListView listOfMessages = (ListView)findViewById(R.id.list_view_messages);
@@ -51,13 +53,23 @@ public class MainActivity extends AppCompatActivity{
 
 
 
+        statistics.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent myIntent = new Intent(MainActivity.this, StatisticsActivity.class);
+                MainActivity.this.startActivity(myIntent);
+            }
+        });
+
+
         comeToChatView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent myIntent = new Intent(MainActivity.this, ChatActivity.class);
                 //TODO: ADD SELected USER PARameters
-              //  myIntent.putExtra("key", value);
-                MainActivity.this.startActivity(myIntent);            }
+                //  myIntent.putExtra("key", value);
+                MainActivity.this.startActivity(myIntent);
+            }
         });
 
         listOfMessages.setOnItemClickListener(new AdapterView.OnItemClickListener() {
