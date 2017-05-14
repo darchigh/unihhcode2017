@@ -1,32 +1,26 @@
 package com.chatbotapp;
 
-import android.app.Activity;
-import android.content.res.Resources;
-import android.util.Log;
 
-import com.chatbotapp.mambaObj.ChatMessage;
 import com.chatbotapp.mambaObj.ChatMessages;
+import com.chatbotapp.mambaObj.Logon;
 import com.chatbotapp.mambaObj.SearchResult;
-import com.chatbotapp.mambaObj.User;
-import com.google.gson.Gson;
-import com.liisa.chatbotapp.R;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
-import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.concurrent.Semaphore;
 
 import javax.net.ssl.HttpsURLConnection;
 
 /**
- * Created by aossa on 08.04.2017.
+ *
+ * @author Alex
  */
-
 public class MambaWebApi {
-
-    private static final Gson GSON = new Gson();
 
     private static final String DEFAULT_HOST = "api.mobile-api.ru";
 
@@ -37,14 +31,17 @@ public class MambaWebApi {
     private static final String UPDATE_REQ = "PUT";
     private static final String DELETE_REQ = "DELETE";
 
-    private Activity act;
-    private String cookie;
+    private final Map<String, String> cookie = new HashMap<String, String>();
 
-    public MambaWebApi(Activity act) {
-        this.act = act;
+    private final Semaphore sema = new Semaphore(1);
+
+    private final ILog log;
+
+    public MambaWebApi(ILog log) {
+        this.log = log;
 
 
-/**
+/*
  double DEFAULT_LAT = 53.599815d;
  double DEFAULT_LON = 9.933121d;
 
@@ -65,90 +62,155 @@ Log.d(getString(R.string.log_tag), user.getName() + " --> " +  user.toString());
  */
     }
 
+/*
+    private Thread getSessionCookie() throws Exception {
+        cookie = "";
 
-    public void getChat(String userId, IResponse<ChatMessages> response)  throws Exception {
-        getChat(userId, 20, 0,response); // Default values from the request.
-    }
-
-
-    public void getChat(String userId, int limit, int offset,IResponse<ChatMessages> response) throws Exception {
-        try {
-            StringBuilder url = new StringBuilder();
-            url.append("v5.2.38.0/");
-            url.append("users/").append(userId).append("/chat/");
-            url.append("?limit=").append(limit);
-            url.append("&offset=").append(offset);
-            url.append("&").append(DEFAULT_PARAMETER);
-
-            query(response, ChatMessages.class, READ_REQ, url.toString(), "");
-        } catch (Exception e) {
-            Log.e(Resources.getSystem().getString(R.string.log_tag),
-                    "Failed to generate the result of a getChat-request.", e);
-            throw e;
-        }
-    }
-
-
-    public void search(String filter, String search, double lat, double lon, IResponse<SearchResult> response) throws Exception {
-        try {
-            StringBuilder data = new StringBuilder();
-            data.append("{");
-            data.append("   'filter': '").append(filter).append("',");
-            data.append("   'search': '").append(search).append("',");
-            data.append("   'lat': ").append(lat).append(",");
-            data.append("   'lng': ").append(lon).append(",");
-            data.append("   'limit': 40,");
-            data.append("   'lang_id': 'de',");
-            data.append("   'dateType': 'timestamp'");
-            data.append("}");
-
-            StringBuilder url = new StringBuilder();
-            url.append("v5.2.38.0/search/").append("?").append(DEFAULT_PARAMETER);
-
-            query(response, SearchResult.class, READ_REQ, url.toString(), data.toString());
-        } catch (Exception e) {
-            Log.e(Resources.getSystem().getString(R.string.log_tag),
-                    "Failed to generate the result of a search-request.", e);
-            throw e;
-        }
-    }
-
-
-    private <T extends AResponse> void query(final IResponse<T> response,
-                                             final Class<T> resultClass,
-                                             final String reqMethod,
-                                             final String urlParams,
-                                             final String data) throws Exception {
-
-        if (cookie == null || cookie.isEmpty())
-            throw new Exception("Die Optionen wurden noch nicht gesetzt.");
-
-        new Thread(new Runnable() {
+        final Thread queryResult = new Thread(new Runnable() {
             @Override
             public void run() {
-                T result = null;
+                HttpsURLConnection connection = null;
+
+                try {
+                    String fullUrl = "https://" + DEFAULT_HOST + "/v5.2.38.0/login/builder/?" + DEFAULT_PARAMETER;
+                    log.l(ILog.LogLevel.debug, "Send query to '" + fullUrl + "'...", null);
+
+                    connection = (HttpsURLConnection) new URL(fullUrl).openConnection();
+                    connection.setRequestMethod(READ_REQ);
+                    connection.setRequestProperty("Host", DEFAULT_HOST);
+                    connection.setRequestProperty("User-Agent", "okhttp/2.2.0");
+
+                    makeCookie(connection.getHeaderFields().get("Set-Cookie"));
+                    log.l(ILog.LogLevel.debug, "Generated cookie: " + cookie, null);
+                } catch (Exception e) {
+                    log.l(ILog.LogLevel.error, "Failed to send a query.", e);
+                } finally {
+                    try {
+                        if (connection != null)
+                            connection.disconnect();
+                    } catch (Exception e) {
+                        log.l(ILog.LogLevel.warn, "Failed to close the connection.", e);
+                    }
+                }
+            }
+        });
+
+        queryResult.start();
+
+        return queryResult;
+    }
+    */
+
+
+    public Thread logon(final String email, final String password, final IResponse<Logon> response) throws Exception {
+        // getSessionCookie().join();
+        Thread result;
+
+        try {
+            String data = "";
+            data += "{";
+            data += "   \"login\":{";
+            data += "      \"login\":\"" + email + "\",";
+            data += "      \"password\":\"" + password + "\"";
+            data += "  }";
+            data += "}";
+
+            result = query(response, Logon.class, CREATE_REQ, "v5.2.38.0/login/builder/", null, data);
+        } catch (Exception e) {
+            log.l(ILog.LogLevel.error, "Failed to generate the result of a search-request.", e);
+            throw e;
+        }
+
+        return result;
+    }
+
+
+    public Thread getChat(String userId, final IResponse<ChatMessages> response) throws Exception {
+        return getChat(userId, 20, 0, response); // Default values from the request.
+    }
+
+
+    public Thread getChat(String userId, int limit, int offset, final IResponse<ChatMessages> response) throws Exception {
+        Thread result;
+
+        try {
+            result = query(response, ChatMessages.class, READ_REQ,
+                    "v5.2.38.0/users/" + userId + "/chat/",
+                    "?limit=" + limit + "&offset=" + offset,
+                    null);
+        } catch (Exception e) {
+            log.l(ILog.LogLevel.error, "Failed to generate the result of a getChat-request.", e);
+            throw e;
+        }
+
+        return result;
+    }
+
+
+    public Thread search(String filter, String search, double lat, double lon, final IResponse<SearchResult> response) throws Exception {
+        Thread result ;
+
+        try {
+            String data = "";
+            data += "{";
+            data += "   'filter': '" + filter + "',";
+            data += "   'search': '" + search + "',";
+            data += "   'lat': " + lat + ",";
+            data += "   'lng': " + lon + ",";
+            data += "   'limit': 40,";
+            data += "   'lang_id': 'de',";
+            data += "   'dateType': 'timestamp'";
+            data += "}";
+
+            result = query(response, SearchResult.class, READ_REQ, "v5.2.38.0/search/", null, data);
+        } catch (Exception e) {
+            log.l(ILog.LogLevel.error, "Failed to generate the result of a search-request.", e);
+            throw e;
+        }
+
+        return result;
+    }
+
+
+    private <T extends AResponse> Thread query(final IResponse<T> response,
+                                               final Class<T> resultClass,
+                                               final String reqMethod,
+                                               final String url,
+                                               final String urlParams,
+                                               final String data) throws Exception {
+        final Thread queryResult = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                T result ;
                 HttpsURLConnection connection = null;
                 OutputStreamWriter request = null;
                 StringBuilder sb = new StringBuilder();
 
                 try {
-                    String fullUrl = "https://" + DEFAULT_HOST + "/" + (urlParams == null ? "" : urlParams);
-                    Log.d(act.getString(R.string.log_tag), "Send query to '" + fullUrl + "'...");
+                    String fullUrl = "https://" + DEFAULT_HOST + "/" + url + (urlParams == null ? "?" : urlParams + "&") + DEFAULT_PARAMETER;
+                    log.l(ILog.LogLevel.debug, "Send query to '" + fullUrl + "'...", null);
 
                     connection = (HttpsURLConnection) new URL(fullUrl).openConnection();
-                    connection.setRequestProperty("Cookie", cookie);
+                    connection.setRequestMethod(reqMethod);
+
+                    if (cookie.size() > 0) {
+                        StringBuilder cookieStr = new StringBuilder();
+
+                        for (Map.Entry<String, String> cookieVal : cookie.entrySet()) {
+                            cookieStr.append(cookieVal.getKey()).append("=").append(cookieVal.getValue()).append("; ");
+                        }
+
+                        connection.setRequestProperty("Cookie", cookieStr.toString());
+                    }
+
                     connection.setRequestProperty("Host", DEFAULT_HOST);
                     connection.setRequestProperty("User-Agent", "okhttp/2.2.0");
                     connection.setRequestProperty("Content-Type", "application/json");
 
-                    if (data != null && !data.isEmpty() ) {
-                        connection.setRequestProperty("Content-Length",  String.valueOf(data.length()));
-                    }
-
-                    connection.setRequestMethod(reqMethod);
-
-
                     if (data != null && !data.isEmpty()) {
+                        connection.setRequestProperty("Content-Length", String.valueOf(data.length()));
+
+                        connection.setDoOutput(true);
                         request = new OutputStreamWriter(connection.getOutputStream());
                         request.write(data);
                         request.flush();
@@ -158,62 +220,92 @@ Log.d(getString(R.string.log_tag), user.getName() + " --> " +  user.toString());
                     InputStreamReader isr = new InputStreamReader(connection.getInputStream());
                     BufferedReader reader = new BufferedReader(isr);
 
-                    String line = "";
+                    String line;
                     while ((line = reader.readLine()) != null) {
                         sb.append(line);
                     }
 
-                    Log.d(act.getString(R.string.log_tag), "Got result:");
-                    Log.d(act.getString(R.string.log_tag), sb.toString());
+                    makeCookie(connection.getHeaderFields().get("Set-Cookie"));
+
+                    log.l(ILog.LogLevel.debug, "Got result:", null);
+                    log.l(ILog.LogLevel.debug, sb.toString(), null);
                 } catch (Exception e) {
-                    Log.e(act.getString(R.string.log_tag), "Failed to send a query.", e);
+                    log.l(ILog.LogLevel.error, "Failed to send a query.", e);
                 } finally {
                     try {
                         if (request != null)
                             request.close();
                     } catch (Exception e) {
-                        Log.w(act.getString(R.string.log_tag), "Failed to close the request.", e);
+                        log.l(ILog.LogLevel.warn, "Failed to close the request.", e);
                     }
 
                     try {
                         if (connection != null)
                             connection.disconnect();
                     } catch (Exception e) {
-                        Log.w(act.getString(R.string.log_tag), "Failed to close the connection.", e);
+                        log.l(ILog.LogLevel.warn, "Failed to close the connection.", e);
                     }
                 }
 
                 try {
-                    Log.d(act.getString(R.string.log_tag),
-                            "Generate result class from json-result...");
+                    log.l(ILog.LogLevel.debug, "Generate result class from json-result...", null);
 
-                    result = GSON.fromJson(sb.toString(), resultClass);
+                    result = AResponse.GSON.fromJson(sb.toString(), resultClass);
 
-                    Log.d(act.getString(R.string.log_tag),
-                            "Result successfully generated.");
+                    log.l(ILog.LogLevel.debug, "Result successfully generated.", null);
                 } catch (Exception e) {
-                    Log.e(act.getString(R.string.log_tag),
-                            "Failed to generate result class from json-result.", e);
+                    log.l(ILog.LogLevel.error, "Failed to generate result class from json-result.", null);
                     throw e;
                 }
 
-                response.doResponse((T) result);
+                response.doResponse(result);
             }
-        }).start();
+        });
+
+        queryResult.run();
+
+        return queryResult;
     }
 
-    public String getCookie() {
-        return cookie;
-    }
+    private void makeCookie(List<String> cookieFields) throws Exception {
+        sema.acquire();
 
-    public void setCookie(String cookie) {
-        this.cookie = cookie;
-    }
+        try {
+            log.l(ILog.LogLevel.debug, "Generate cookie from field list...", null);
 
+            if (cookieFields == null)
+                throw new Exception("Es wurden keine Cookies gesetzt!");
+
+            // s_post=7zjJD8f3pfh34NIgyYmRZgtDVfx3F0ZA; path=/; domain=api.mobile-api.ru
+            // mmbsid=V6MieupiCGF5XdUJqIMObhqCI7ndymFX_20170514145128_api.mobile-api.ru; path=/; domain=api.mobile-api.ru
+            // return_token=iBeiQX34hK1qlw9ofYI8UK4IdZtuZhDa; expires=Mon, 14-May-2018 11:51:28 GMT; Max-Age=31536000; path=/; domain=.api.mobile-api.ru; HttpOnly
+
+            for (String cookieField : cookieFields) {
+                int index = cookieField.indexOf(';');
+                String value = cookieField.substring(0, index >= 0 ? index : cookieField.length() - 1);
+                String[] keyValue = value.split("=");
+                cookie.put(keyValue[0], keyValue[1]);
+            }
+
+            log.l(ILog.LogLevel.debug, "Successfully generated cookie from field list.", null);
+        } finally {
+            sema.release();
+        }
+    }
 
     public interface IResponse<T extends AResponse> {
 
-        public abstract void doResponse(T result);
+        void doResponse(T result);
+
+    }
+
+    public interface ILog {
+
+        void l(LogLevel level, String message, Exception e);
+
+        public enum LogLevel {
+            trace, debug, info, warn, error, fatal;
+        }
 
     }
 }

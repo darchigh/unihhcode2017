@@ -16,6 +16,6 @@ public abstract class AResponse {
 
 
     public String toString() {
-        return GSON.toString();
+        return GSON.toJson(this);
     }
 }
