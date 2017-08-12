@@ -19,9 +19,9 @@ public class BarChartActivity extends AppCompatActivity {
         setContentView(R.layout.barchart_activity);
         BarChart chart = (BarChart) findViewById(R.id.chart);
 
-      //  BarData data = new BarData(getXAxisValues(), getDataSet());
-        //chart.setData(data);
-      //  chart.setDescription("My Chart");
+        BarData data = new BarData(getXAxisValues(), getDataSet());
+        chart.setData(data);
+        chart.setDescription("My Chart");
         chart.animateXY(2000, 2000);
         chart.invalidate();
     }
