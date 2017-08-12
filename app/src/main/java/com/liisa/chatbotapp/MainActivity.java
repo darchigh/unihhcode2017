@@ -1,27 +1,28 @@
 package com.liisa.chatbotapp;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.ImageButton;
-
-import java.util.ArrayList;
-
-import android.content.Intent;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.Toast;
+
+import com.chatbotapp.mambaObj.Contact;
+
+import java.util.ArrayList;
 
 /**
  * Created by liisa_000 on 09/04/2017.
  */
 
-public class MainActivity extends AppCompatActivity{
+public class MainActivity extends AppCompatActivity {
 
     Button comeToChatView;
-    ArrayList<Message> myListItems  = new ArrayList<>();
+    ArrayList<Contact> myListItems = new ArrayList<>();
     ImageButton statistics;
 
     @Override
@@ -30,9 +31,9 @@ public class MainActivity extends AppCompatActivity{
         setContentView(R.layout.main_activity);
         comeToChatView = (Button) findViewById(R.id.button);
         statistics = (ImageButton) findViewById(R.id.statistics);
-        myListItems.add(new Message("a","a"));
-        ArrayAdapter adapter = new ArrayAdapter(this,R.layout.listview,myListItems);
-        final ListView listOfMessages = (ListView)findViewById(R.id.list_view_messages);
+        myListItems.add(new Contact());
+        ArrayAdapter adapter = new ArrayAdapter(this, R.layout.listview, myListItems);
+        final ListView listOfMessages = (ListView) findViewById(R.id.list_view_messages);
         listOfMessages.setAdapter(adapter);
 
         statistics.setOnClickListener(new View.OnClickListener() {
@@ -59,8 +60,8 @@ public class MainActivity extends AppCompatActivity{
             public void onItemClick(AdapterView<?> parent, View view,
                                     final int position, long id) {
                 String main = listOfMessages.getItemAtPosition(position).toString();
-                Toast.makeText(getApplicationContext(),main.toString(),Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(MainActivity.this,ChatActivity.class);
+                Toast.makeText(getApplicationContext(), main.toString(), Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(MainActivity.this, ChatActivity.class);
                 intent.putExtra("message", main);
                 startActivity(intent);
             }

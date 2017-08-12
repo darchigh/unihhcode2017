@@ -85,5 +85,19 @@ public class Contact extends AResponse {
     public void setLastNessage(ChatMessage lastNessage) {
         this.lastMessage = lastNessage;
     }
+
+    @Override
+    public String toString() {
+        String name = "unknown";
+        if (anketa != null) {
+            name = anketa.getName();
+        }
+        String lastmsg= "no msg";
+        if (getLastNessage() != null) {
+            lastmsg = getLastNessage().getMessage();
+        }
+
+        return name + " - " +lastmsg;
+    }
 }
 
