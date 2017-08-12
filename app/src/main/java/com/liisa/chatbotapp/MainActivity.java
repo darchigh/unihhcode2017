@@ -1,34 +1,18 @@
 package com.liisa.chatbotapp;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.LinearLayoutManager;
-import android.util.Log;
 import android.view.View;
-import android.support.v7.widget.RecyclerView;
-import android.widget.EditText;
 import android.widget.ImageButton;
-import com.ibm.watson.developer_cloud.conversation.v1.ConversationService;
-import com.ibm.watson.developer_cloud.conversation.v1.model.MessageRequest;
-import com.ibm.watson.developer_cloud.conversation.v1.model.MessageResponse;
-import com.ibm.mobilefirstplatform.clientsdk.android.core.api.BMSClient;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
+
 import android.content.Intent;
-import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
-import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
-
-import java.util.ArrayList;
 
 /**
  * Created by liisa_000 on 09/04/2017.
@@ -43,11 +27,11 @@ public class MainActivity extends AppCompatActivity{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_user_selection);
+        setContentView(R.layout.main_activity);
         comeToChatView = (Button) findViewById(R.id.button);
         statistics = (ImageButton) findViewById(R.id.statistics);
         myListItems.add(new Message("a","a"));
-        ArrayAdapter adapter = new ArrayAdapter(this,R.layout.activity_listview,myListItems);
+        ArrayAdapter adapter = new ArrayAdapter(this,R.layout.listview,myListItems);
         final ListView listOfMessages = (ListView)findViewById(R.id.list_view_messages);
         listOfMessages.setAdapter(adapter);
 
