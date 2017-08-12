@@ -23,6 +23,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:background="@null"
+        android:paddingBottom="20dp"
         android:elevation="24dp"
         android:scaleType="fitCenter"
         app:srcCompat="@drawable/statistics" />
