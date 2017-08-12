@@ -15,6 +15,7 @@ import android.widget.Toast;
 
 import com.chatbotapp.MambaWebApi;
 import com.chatbotapp.mambaObj.Contact;
+import com.chatbotapp.mambaObj.Contacts;
 import com.chatbotapp.mambaObj.Logon;
 
 import java.util.ArrayList;
@@ -36,13 +37,11 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.main_activity);
         comeToChatView = (Button) findViewById(R.id.button);
         statistics = (ImageButton) findViewById(R.id.statistics);
-        myListItems.add(new Contact());
-        ArrayAdapter adapter = new ArrayAdapter(this, R.layout.listview, myListItems);
+      final  ArrayAdapter adapter = new ArrayAdapter(this, R.layout.listview, myListItems);
         final ListView listOfMessages = (ListView) findViewById(R.id.list_view_messages);
         listOfMessages.setAdapter(adapter);
 
-
-        MambaWebApi api = new MambaWebApi();
+        final MambaWebApi api = new MambaWebApi();
 
         try {
             String email = "nathalie.degtjanikov@gmail.com";
@@ -50,15 +49,33 @@ public class MainActivity extends AppCompatActivity {
 
             api.logon(email, password, new MambaWebApi.IResponse<Logon>() {
                 @Override
-                public void doResponse(Logon result) {
+                public void doResponse(Logon logon) {
+                    Log.i("MambaWebApi", "Logon successful: " + logon.isSuccessful());
+
+                    if (logon.isSuccessful()) {
+                        try {
+                            api.getContacts(new MambaWebApi.IResponse<Contacts>() {
+                                @Override
+                                public void doResponse(Contacts contacts) {
+                                    adapter.clear();
+
+                                    for(Contact contact: contacts.getContacts()) {
+                                        Log.i("MambaWebApi", "Add contact: " + contact.toJSON());
+                                        adapter.add(contact);
+                                    }
 
 
+                                }
+                            });
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
                 }
             });
         } catch (Exception e) {
-
+            e.printStackTrace();
         }
-
 
         statistics.setOnClickListener(new View.OnClickListener() {
             @Override

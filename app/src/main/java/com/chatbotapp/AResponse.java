@@ -17,4 +17,16 @@ public abstract class AResponse {
     public String toJSON() {
         return GSON.toJson(this);
     }
+
+
+    protected String mask(String in) {
+        return in
+                .replace("&auml;", "ä")
+                .replace("&Auml;", "Ä")
+                .replace("&ouml;", "ö")
+                .replace("&Ouml;", "Ö")
+                .replace("&uuml;", "ü")
+                .replace("&Uuml;", "Ü")
+                .replace("&szlig;", "ß");
+    }
 }

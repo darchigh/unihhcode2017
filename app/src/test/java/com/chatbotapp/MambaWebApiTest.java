@@ -28,15 +28,18 @@ public class MambaWebApiTest {
         try {
             api = new MambaWebApi();
 
-
-            api.logon(email, password, new MambaWebApi.IResponse<Logon>() {
+            Logon result = (Logon) api.logon(email, password, new MambaWebApi.IResponse<Logon>() {
                 @Override
-                public void doResponse(Logon result) {
+                public void doResponse(Logon res) {
                     System.out.println("Authentication:");
-                    System.out.println("   Authenticated: " + result.isSuccessful());
-                    System.out.println("   User: " + result.getProfile().toJSON());
+                    System.out.println("   Authenticated: " + res.isSuccessful());
+                    System.out.println("   User: " + res.getProfile().toJSON());
                 }
             }).get();
+
+            System.out.println("Authentication:");
+            System.out.println("   Authenticated: " + result.isSuccessful());
+            System.out.println("   User: " + result.getProfile().toJSON());
         } catch (Exception e) {
             e.printStackTrace();
         }

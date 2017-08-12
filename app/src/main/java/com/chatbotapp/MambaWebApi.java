@@ -172,9 +172,17 @@ public class MambaWebApi {
                                                   final String url,
                                                   final String urlParams,
                                                   final String data) throws Exception {
-        AsyncTask<String, T, T> result = new AsyncTask<String, T, T>() {
+
+        AsyncTask<Void, Void, T> task = new AsyncTask<Void, Void, T>() {
+
+
             @Override
-            protected T doInBackground(String... params) {
+            protected void onPostExecute(T t) {
+                response.doResponse(t);
+            }
+
+            @Override
+            protected T doInBackground(Void... params) {
                 T result;
                 HttpsURLConnection connection = null;
                 OutputStreamWriter request = null;
@@ -252,14 +260,13 @@ public class MambaWebApi {
                     throw e;
                 }
 
-                response.doResponse(result);
                 return result;
             }
         };
 
-        result.execute(reqMethod, url, urlParams, data);
+        task.execute();
 
-        return result;
+        return task;
     }
 
     private void makeCookie(List<String> cookieFields) throws Exception {
