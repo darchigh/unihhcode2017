@@ -14,8 +14,7 @@ public abstract class AResponse {
 
     public static Gson GSON = new GsonBuilder().create();
 
-
-    public String toString() {
+    public String toJSON() {
         return GSON.toJson(this);
     }
 }

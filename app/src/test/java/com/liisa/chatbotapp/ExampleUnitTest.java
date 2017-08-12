@@ -1,7 +1,6 @@
 package com.liisa.chatbotapp;
 
 import com.chatbotapp.MambaWebApi;
-import com.chatbotapp.mambaObj.ChatAcknowledge;
 import com.chatbotapp.mambaObj.ChatMessage;
 import com.chatbotapp.mambaObj.ChatMessages;
 import com.chatbotapp.mambaObj.Contact;
@@ -10,9 +9,8 @@ import com.chatbotapp.mambaObj.Logon;
 import com.chatbotapp.mambaObj.SearchResult;
 import com.chatbotapp.mambaObj.User;
 
+import org.junit.BeforeClass;
 import org.junit.Test;
-
-import static org.junit.Assert.*;
 
 /**
  * Example local unit test, which will execute on the development machine (host).
@@ -21,30 +19,35 @@ import static org.junit.Assert.*;
  */
 public class ExampleUnitTest {
 
-    private final static MambaWebApi api = new MambaWebApi(new MambaWebApi.ILog() {
-        @Override
-        public void l(LogLevel level, String message, Exception e) {
-            System.out.println(level.toString() + ": " + message + (e == null ? "" : "; Exception: " + e.toString()));
-        }
-    });
+    private static MambaWebApi api;
 
-    static {
+    @BeforeClass
+    public static void init() throws Exception {
         String email = "nathalie.degtjanikov@gmail.com";
         String password = "Schokobanane123";
 
         try {
+            api = new MambaWebApi(new MambaWebApi.ILog() {
+                @Override
+                public void l(LogLevel level, String message, Exception e) {
+                    System.out.println(level.toString() + ": " + message + (e == null ? "" : "; Exception: " + e.toString()));
+                }
+            });
+
+
             api.logon(email, password, new MambaWebApi.IResponse<Logon>() {
                 @Override
                 public void doResponse(Logon result) {
                     System.out.println("Authentication:");
                     System.out.println("   Authenticated: " + result.isSuccessful());
-                    System.out.println("   User: " + result.getProfile().toString());
+                    System.out.println("   User: " + result.getProfile().toJSON());
                 }
             }).join();
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
+
 
     @Test
     public void search() throws Exception {

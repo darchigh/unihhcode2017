@@ -56,7 +56,7 @@ public class MambaWebApi {
  api.search("active", "nath", DEFAULT_LAT, DEFAULT_LON, new MambaWebApi.IResponse<SearchResult>() {
 @Override public void doResponse(SearchResult result) {
 for(User user : result.getUsers()) {
-Log.d(getString(R.string.log_tag), user.getName() + " --> " +  user.toString());
+Log.d(getString(R.string.log_tag), user.getName() + " --> " +  user.toJSON());
 }
 
 }
@@ -322,20 +322,21 @@ Log.d(getString(R.string.log_tag), user.getName() + " --> " +  user.toString());
             log.l(ILog.LogLevel.debug, "Generate cookie from field list...", null);
 
             if (cookieFields == null)
-                throw new Exception("Es wurden keine Cookies gesetzt!");
+                log.l(ILog.LogLevel.debug, "Es wurden keine Cookies gesetzt!", null);
+            else {
+                // s_post=7zjJD8f3pfh34NIgyYmRZgtDVfx3F0ZA; path=/; domain=api.mobile-api.ru
+                // mmbsid=V6MieupiCGF5XdUJqIMObhqCI7ndymFX_20170514145128_api.mobile-api.ru; path=/; domain=api.mobile-api.ru
+                // return_token=iBeiQX34hK1qlw9ofYI8UK4IdZtuZhDa; expires=Mon, 14-May-2018 11:51:28 GMT; Max-Age=31536000; path=/; domain=.api.mobile-api.ru; HttpOnly
 
-            // s_post=7zjJD8f3pfh34NIgyYmRZgtDVfx3F0ZA; path=/; domain=api.mobile-api.ru
-            // mmbsid=V6MieupiCGF5XdUJqIMObhqCI7ndymFX_20170514145128_api.mobile-api.ru; path=/; domain=api.mobile-api.ru
-            // return_token=iBeiQX34hK1qlw9ofYI8UK4IdZtuZhDa; expires=Mon, 14-May-2018 11:51:28 GMT; Max-Age=31536000; path=/; domain=.api.mobile-api.ru; HttpOnly
+                for (String cookieField : cookieFields) {
+                    int index = cookieField.indexOf(';');
+                    String value = cookieField.substring(0, index >= 0 ? index : cookieField.length() - 1);
+                    String[] keyValue = value.split("=");
+                    cookie.put(keyValue[0], keyValue[1]);
+                }
 
-            for (String cookieField : cookieFields) {
-                int index = cookieField.indexOf(';');
-                String value = cookieField.substring(0, index >= 0 ? index : cookieField.length() - 1);
-                String[] keyValue = value.split("=");
-                cookie.put(keyValue[0], keyValue[1]);
+                log.l(ILog.LogLevel.debug, "Successfully generated cookie from field list.", null);
             }
-
-            log.l(ILog.LogLevel.debug, "Successfully generated cookie from field list.", null);
         } finally {
             sema.release();
         }

@@ -51,8 +51,6 @@ public class MainActivity extends AppCompatActivity{
         final ListView listOfMessages = (ListView)findViewById(R.id.list_view_messages);
         listOfMessages.setAdapter(adapter);
 
-
-
         statistics.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
