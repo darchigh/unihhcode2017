@@ -27,7 +27,7 @@ import java.util.concurrent.ExecutionException;
 
 public class MainActivity extends AppCompatActivity {
 
-    Button comeToChatView;
+   // Button comeToChatView;
     ArrayList<Contact> myListItems = new ArrayList<>();
     ImageButton statistics;
 
@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_activity);
-        comeToChatView = (Button) findViewById(R.id.button);
+      //  comeToChatView = (Button) findViewById(R.id.button);
         statistics = (ImageButton) findViewById(R.id.statistics);
       final  ArrayAdapter adapter = new ArrayAdapter(this, R.layout.listview, myListItems);
         final ListView listOfMessages = (ListView) findViewById(R.id.list_view_messages);
@@ -86,15 +86,15 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
-        comeToChatView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent myIntent = new Intent(MainActivity.this, ChatActivity.class);
-                //TODO: ADD SELected USER PARameters
-                //  myIntent.putExtra("key", value);
-                MainActivity.this.startActivity(myIntent);
-            }
-        });
+//        comeToChatView.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent myIntent = new Intent(MainActivity.this, ChatActivity.class);
+//                //TODO: ADD SELected USER PARameters
+//                //  myIntent.putExtra("key", value);
+//                MainActivity.this.startActivity(myIntent);
+//            }
+//        });
 
         listOfMessages.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
