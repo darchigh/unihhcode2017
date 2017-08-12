@@ -19,7 +19,7 @@ import org.junit.Test;
  */
 public class ExampleUnitTest {
 
-    private static MambaWebApi api;
+   private static MambaWebApi api;
 
     @BeforeClass
     public static void init() throws Exception {
@@ -27,12 +27,7 @@ public class ExampleUnitTest {
         String password = "Schokobanane123";
 
         try {
-            api = new MambaWebApi(new MambaWebApi.ILog() {
-                @Override
-                public void l(LogLevel level, String message, Exception e) {
-                    System.out.println(level.toString() + ": " + message + (e == null ? "" : "; Exception: " + e.toString()));
-                }
-            });
+            api = new MambaWebApi();
 
 
             api.logon(email, password, new MambaWebApi.IResponse<Logon>() {
