@@ -8,7 +8,7 @@ import android.os.IBinder;
 import android.support.v7.app.AppCompatActivity;
 
 /**
- * Activity that automatically binds ApiService onStart and unbinds onStop. Implement onServiceConnect() and onServiceDisconnect to actually use the Service.
+ * Activity that automatically binds ApiService onStart and unbinds onStop. Implement onApiAvailable() and onApiUnavailable to actually use the Service.
  */
 public abstract class ApiActivity extends AppCompatActivity {
     protected ApiService apiService;
@@ -30,9 +30,9 @@ public abstract class ApiActivity extends AppCompatActivity {
         }
     }
 
-    protected abstract void onServiceConnect();
+    protected abstract void onApiAvailable();
 
-    protected abstract void onServiceDisconnect();
+    protected abstract void onApiUnavailable();
 
     /**
      * Defines callbacks for service binding, passed to bindService()
@@ -43,13 +43,13 @@ public abstract class ApiActivity extends AppCompatActivity {
                                        IBinder service) {
             apiService = ((ApiService.LocalBinder) service).getService();
             mBound = true;
-            onServiceConnect();
+            onApiAvailable();
         }
 
         @Override
         public void onServiceDisconnected(ComponentName arg0) {
             mBound = false;
-            onServiceDisconnect();
+            onApiUnavailable();
         }
     };
 

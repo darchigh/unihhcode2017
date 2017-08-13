@@ -59,7 +59,7 @@ public class MainActivity extends ApiActivity {
     }
 
     @Override
-    protected void onServiceConnect() {
+    protected void onApiAvailable() {
         try {
             String email = "nathalie.degtjanikov@gmail.com";
             String password = "Schokobanane123";
@@ -96,7 +96,7 @@ public class MainActivity extends ApiActivity {
     }
 
     @Override
-    protected void onServiceDisconnect() {
+    protected void onApiUnavailable() {
 
     }
 }
