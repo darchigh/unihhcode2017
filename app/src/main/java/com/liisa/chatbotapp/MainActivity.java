@@ -29,14 +29,7 @@ import java.util.ArrayList;
  * Created by liisa_000 on 09/04/2017.
  */
 
-<<<<<<< HEAD
-public class MainActivity extends AppCompatActivity {
-
-   // Button comeToChatView;
-=======
 public class MainActivity extends ApiActivity {
-    Button comeToChatView;
->>>>>>> working changes from yesterday, may not work
     ArrayList<Contact> myListItems = new ArrayList<>();
     ImageButton statistics;
     String email = "nathalie.degtjanikov@gmail.com";
@@ -122,8 +115,6 @@ public class MainActivity extends ApiActivity {
         } catch (Exception e) {
             e.printStackTrace();
         }
-<<<<<<< HEAD
-
         statistics.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -154,12 +145,5 @@ public class MainActivity extends ApiActivity {
                 startActivity(intent);
             }
         });
-=======
->>>>>>> working changes from yesterday, may not work
     }
 }
-
-
-
-
-
