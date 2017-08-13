@@ -1,4 +1,4 @@
-package com.chatbotapp.api;
+package com.chatbotapp;
 
 import android.content.ComponentName;
 import android.content.Context;
@@ -8,13 +8,9 @@ import android.os.IBinder;
 import android.support.v7.app.AppCompatActivity;
 
 /**
- * Created by U550264 on 12.08.2017.
+ * Activity that automatically binds ApiService onStart and unbinds onStop. Implement onServiceConnect() and onServiceDisconnect to actually use the Service.
  */
-
 public abstract class ApiActivity extends AppCompatActivity {
-    /**
-     * API SERVICE HANDLING
-     */
     protected ApiService apiService;
     boolean mBound = false;
 
@@ -34,6 +30,10 @@ public abstract class ApiActivity extends AppCompatActivity {
         }
     }
 
+    protected abstract void onServiceConnect();
+
+    protected abstract void onServiceDisconnect();
+
     /**
      * Defines callbacks for service binding, passed to bindService()
      */
@@ -43,11 +43,14 @@ public abstract class ApiActivity extends AppCompatActivity {
                                        IBinder service) {
             apiService = ((ApiService.LocalBinder) service).getService();
             mBound = true;
+            onServiceConnect();
         }
 
         @Override
         public void onServiceDisconnected(ComponentName arg0) {
             mBound = false;
+            onServiceDisconnect();
         }
     };
+
 }

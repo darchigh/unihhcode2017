@@ -1,15 +1,17 @@
-package com.chatbotapp.api;
+package com.chatbotapp;
 
 import android.app.Service;
 import android.content.Intent;
 import android.os.Binder;
 import android.os.IBinder;
 
-import com.chatbotapp.MambaWebApi;
-
+/**
+ * Background Service Thread that holds WebApi so it does not loose cookies when changing Activites.
+ */
 public class ApiService extends Service {
     private final IBinder mBinder = new LocalBinder();
     private MambaWebApi api;
+
     /**
      * Class used for the client Binder.  Because we know this service always
      * runs in the same process as its clients, we don't need to deal with IPC.
@@ -20,6 +22,7 @@ public class ApiService extends Service {
             return ApiService.this;
         }
     }
+
     public ApiService() {
         api = new MambaWebApi();
     }

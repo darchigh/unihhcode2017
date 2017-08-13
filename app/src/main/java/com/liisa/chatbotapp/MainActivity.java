@@ -1,24 +1,17 @@
 package com.liisa.chatbotapp;
 
-import android.content.ComponentName;
-import android.content.Context;
 import android.content.Intent;
-import android.content.ServiceConnection;
 import android.os.Bundle;
-import android.os.IBinder;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.Toast;
 
 import com.chatbotapp.MambaWebApi;
-import com.chatbotapp.api.ApiActivity;
-import com.chatbotapp.api.ApiService;
+import com.chatbotapp.ApiActivity;
 import com.chatbotapp.mambaObj.Contact;
 import com.chatbotapp.mambaObj.Contacts;
 import com.chatbotapp.mambaObj.Logon;
@@ -32,8 +25,6 @@ import java.util.ArrayList;
 public class MainActivity extends ApiActivity {
     ArrayList<Contact> myListItems = new ArrayList<>();
     ImageButton statistics;
-    String email = "nathalie.degtjanikov@gmail.com";
-    String password = "Schokobanane123";
     private ArrayAdapter adapter;
 
     @Override
@@ -54,17 +45,6 @@ public class MainActivity extends ApiActivity {
             }
         });
 
-
-        comeToChatView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent myIntent = new Intent(MainActivity.this, ChatActivity.class);
-                //TODO: ADD SELected USER PARameters
-                //  myIntent.putExtra("key", value);
-                MainActivity.this.startActivity(myIntent);
-            }
-        });
-
         listOfMessages.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view,
@@ -79,9 +59,7 @@ public class MainActivity extends ApiActivity {
     }
 
     @Override
-    protected void onStart() {
-        super.onStart();
-
+    protected void onServiceConnect() {
         try {
             String email = "nathalie.degtjanikov@gmail.com";
             String password = "Schokobanane123";
@@ -115,35 +93,10 @@ public class MainActivity extends ApiActivity {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        statistics.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent myIntent = new Intent(MainActivity.this, StatisticsActivity.class);
-                MainActivity.this.startActivity(myIntent);
-            }
-        });
+    }
 
+    @Override
+    protected void onServiceDisconnect() {
 
-//        comeToChatView.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent myIntent = new Intent(MainActivity.this, ChatActivity.class);
-//                //TODO: ADD SELected USER PARameters
-//                //  myIntent.putExtra("key", value);
-//                MainActivity.this.startActivity(myIntent);
-//            }
-//        });
-
-        listOfMessages.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view,
-                                    final int position, long id) {
-                String main = listOfMessages.getItemAtPosition(position).toString();
-                Toast.makeText(getApplicationContext(), main.toString(), Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(MainActivity.this, ChatActivity.class);
-                intent.putExtra("message", main);
-                startActivity(intent);
-            }
-        });
     }
 }

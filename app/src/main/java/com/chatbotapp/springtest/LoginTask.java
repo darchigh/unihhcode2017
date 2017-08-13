@@ -1,26 +1,20 @@
-package com.chatbotapp.api;
+package com.chatbotapp.springtest;
 
-import android.media.tv.TvContract;
 import android.os.AsyncTask;
 import android.util.Log;
 
 import com.chatbotapp.mambaObj.Login;
 import com.chatbotapp.mambaObj.Logon;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.ObjectWriter;
 
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.http.converter.json.GsonHttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * Created by U550264 on 12.08.2017.
