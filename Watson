@@ -1,0 +1,18 @@
+Watson: 
+
+https://console.eu-gb.bluemix.net/catalog/services/conversation/
+(Watson conversation - ich finde aber die alten Sachen da nicht mehr...)
+Bluemix User: liisa.vaht@studium.uni-hamburg.de
+PW: Nummikas_2
+
+Falls ein Workspace neu angelegt werden muss (scheint alles weg zu sein..)
+, dann in ChatActivity
+
+conversation_username
+conversation_password
+workspace_id
+
+entsprechend ändern (werden dann generiert)
+
+Mehr ist es eigentlich nicht. Hier ist das ganze auch nochmal schritt-für-schritt dokumentiert: 
+https://console.bluemix.net/docs/services/conversation/getting-started.html#gettingstarted
