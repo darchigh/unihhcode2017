@@ -1,0 +1,888 @@
+{
+	"info": {
+		"name": "Mamba Burp-Api",
+		"_postman_id": "23061499-7f81-d044-6e89-fa7339d8d4fa",
+		"description": "Api Sniffed via Burpsuite",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "users",
+			"description": "",
+			"item": [
+				{
+					"name": "{id}/albums",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Cookie",
+								"value": "real_promo_1745679977=show; mmbsid=aaKUzqHDmeRcp4UjS70narJVhMWrMWJ0_20170408142902_api.mobile-api.ru; start_with_auth_form=1; s_post=H4vCKFrbL7ITY7PMPpJ2TBVIwPiQT6TQ; unauth_lang=5; LOGIN=mb1745679977; registered_once=1; return_token=wAf2T0zJMmKIxc3SXxGT85h0BXJg4WkR"
+							},
+							{
+								"key": "User-Agent",
+								"value": "okhttp/2.2.0"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "api.mobile-api.ru/v5.2.38.0/users/996784956/albums/996786140/photos/?limit=12&offset=0&langId=de&dateType=timestamp HTTP/1.1",
+							"host": [
+								"api",
+								"mobile-api",
+								"ru"
+							],
+							"path": [
+								"v5.2.38.0",
+								"users",
+								"996784956",
+								"albums",
+								"996786140",
+								"photos",
+								""
+							],
+							"query": [
+								{
+									"key": "limit",
+									"value": "12"
+								},
+								{
+									"key": "offset",
+									"value": "0"
+								},
+								{
+									"key": "langId",
+									"value": "de"
+								},
+								{
+									"key": "dateType",
+									"value": "timestamp HTTP/1.1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "{id}/post",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Content-Length",
+								"value": "115",
+								"disabled": true
+							},
+							{
+								"key": "Host",
+								"value": "api.mobile-api.ru"
+							},
+							{
+								"key": "Connection",
+								"value": "close",
+								"disabled": true
+							},
+							{
+								"key": "Cookie",
+								"value": "real_promo_1745679977=show; mmbsid=osrzjH9XkCKFuqebkes9k7LOD4FFgRlz_20170409152107_api.mobile-api.ru; start_with_auth_form=1; s_post=jcdgfEqxt7zTzfA9nuQiGkz0vhm8EQOV; unauth_lang=5; LOGIN=mb1745679977; registered_once=1; return_token=D37vng5neKL4BDi1d62M3eqgXQJC2wYc"
+							},
+							{
+								"key": "User-Agent",
+								"value": "okhttp/2.2.0"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"message\":\"Wenn du magst, kannst du mich ja mal anschreiben. Wünsche dir noch ein schönes WE.\",\"dateType\":\"timestamp\",\"lang_id\":\"de\",\"lat\":53.59976,\"lng\":9.933682}"
+						},
+						"url": {
+							"raw": "https://api.mobile-api.ru/v5.2.38.0/users/1709996356/post/?langId=de&dateType=timestamp",
+							"protocol": "https",
+							"host": [
+								"api",
+								"mobile-api",
+								"ru"
+							],
+							"path": [
+								"v5.2.38.0",
+								"users",
+								"1709996356",
+								"post",
+								""
+							],
+							"query": [
+								{
+									"key": "langId",
+									"value": "de"
+								},
+								{
+									"key": "dateType",
+									"value": "timestamp"
+								}
+							]
+						},
+						"description": "posts msg to chat (user)"
+					},
+					"response": [
+						{
+							"id": "b125716a-b7aa-48dd-a4a7-a040010fb66c",
+							"name": "postmsg successfull",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"type": "text",
+										"name": "Content-Type",
+										"value": "application/json",
+										"disabled": false
+									},
+									{
+										"key": "Content-Length",
+										"value": "115",
+										"enabled": false,
+										"description": "The length of the response body in octets (8-bit bytes)",
+										"disabled": true
+									},
+									{
+										"key": "Host",
+										"value": "api.mobile-api.ru",
+										"enabled": true,
+										"disabled": false
+									},
+									{
+										"key": "Connection",
+										"value": "close",
+										"enabled": false,
+										"description": "Options that are desired for the connection",
+										"disabled": true
+									},
+									{
+										"key": "Cookie",
+										"value": "real_promo_1745679977=show; mmbsid=osrzjH9XkCKFuqebkes9k7LOD4FFgRlz_20170409152107_api.mobile-api.ru; start_with_auth_form=1; s_post=jcdgfEqxt7zTzfA9nuQiGkz0vhm8EQOV; unauth_lang=5; LOGIN=mb1745679977; registered_once=1; return_token=D37vng5neKL4BDi1d62M3eqgXQJC2wYc",
+										"enabled": true,
+										"disabled": false
+									},
+									{
+										"key": "User-Agent",
+										"value": "okhttp/2.2.0",
+										"enabled": true,
+										"disabled": false
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\"message\":\"Wenn du magst, kannst du mich ja mal anschreiben. Wünsche dir noch ein schönes WE.\",\"dateType\":\"timestamp\",\"lang_id\":\"de\",\"lat\":53.59976,\"lng\":9.933682}"
+								},
+								"url": {
+									"raw": "https://api.mobile-api.ru/v5.2.38.0/users/1709996356/post/?langId=de&dateType=timestamp",
+									"protocol": "https",
+									"host": [
+										"api",
+										"mobile-api",
+										"ru"
+									],
+									"path": [
+										"v5.2.38.0",
+										"users",
+										"1709996356",
+										"post",
+										""
+									],
+									"query": [
+										{
+											"key": "langId",
+											"value": "de"
+										},
+										{
+											"key": "dateType",
+											"value": "timestamp"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"_postman_previewtype": "text",
+							"header": [
+								{
+									"key": "Cache-Control",
+									"value": "post-check=0, pre-check=0",
+									"name": "Cache-Control",
+									"description": ""
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-store, no-cache, must-revalidate",
+									"name": "Cache-Control",
+									"description": ""
+								},
+								{
+									"key": "Cache-control",
+									"value": "private",
+									"name": "Cache-control",
+									"description": ""
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive",
+									"name": "Connection",
+									"description": ""
+								},
+								{
+									"key": "Content-Type",
+									"value": "text/json; charset=utf-8",
+									"name": "Content-Type",
+									"description": ""
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 09 Apr 2017 12:38:29 GMT",
+									"name": "Date",
+									"description": ""
+								},
+								{
+									"key": "Expires",
+									"value": "Mon, 26 Jul 1997 05:00:00 GMT",
+									"name": "Expires",
+									"description": ""
+								},
+								{
+									"key": "Last-Modified",
+									"value": "Sun, 09 Apr 2017 12:38:29 GMT",
+									"name": "Last-Modified",
+									"description": ""
+								},
+								{
+									"key": "P3P",
+									"value": "policyref=\"http://www.mamba.ru/w3c/p3p.xml\", CP=\"NOI DSP COR NID ADM DEV PSA OUR IND UNI PUR COM NAV INT STA\"",
+									"name": "P3P",
+									"description": ""
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache",
+									"name": "Pragma",
+									"description": ""
+								},
+								{
+									"key": "Server",
+									"value": "nginx/1.11.2",
+									"name": "Server",
+									"description": ""
+								},
+								{
+									"key": "Set-Cookie",
+									"value": "return_token=DqCZJGMfnNysSC2lEksVrSvzd4vE0ewS; expires=Mon, 09-Apr-2018 12:38:29 GMT; Max-Age=31536000; path=/; domain=.api.mobile-api.ru; HttpOnly",
+									"name": "Set-Cookie",
+									"description": ""
+								},
+								{
+									"key": "Set-Cookie",
+									"value": "user_coords=deleted; expires=Thu, 01-Jan-1970 00:00:01 GMT; Max-Age=0; path=/; domain=.api.mobile-api.ru; HttpOnly",
+									"name": "Set-Cookie",
+									"description": ""
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked",
+									"name": "Transfer-Encoding",
+									"description": ""
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "SAMEORIGIN",
+									"name": "X-Frame-Options",
+									"description": ""
+								},
+								{
+									"key": "X-MMB-Powerd-By",
+									"value": "wwwnew80",
+									"name": "X-MMB-Powerd-By",
+									"description": ""
+								},
+								{
+									"key": "X-MMB-Ver",
+									"value": "462.1",
+									"name": "X-MMB-Ver",
+									"description": ""
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "PHP/7.0.12",
+									"name": "X-Powered-By",
+									"description": ""
+								},
+								{
+									"key": "X-WOJAPI-RELEASE-VERSION",
+									"value": "462.1",
+									"name": "X-WOJAPI-RELEASE-VERSION",
+									"description": ""
+								}
+							],
+							"cookie": [
+								{
+									"expires": "Mon Apr 09 2018 12:38:29 GMT+0200 (Mitteleuropäische Sommerzeit)",
+									"httpOnly": true,
+									"domain": "api.mobile-api.ru",
+									"path": "/",
+									"secure": false,
+									"value": "DqCZJGMfnNysSC2lEksVrSvzd4vE0ewS",
+									"key": "return_token"
+								},
+								{
+									"expires": "Mon Jan 18 2038 17:14:07 GMT+0100 (Mitteleuropäische Zeit)",
+									"httpOnly": false,
+									"domain": "api.mobile-api.ru",
+									"path": "/",
+									"secure": false,
+									"value": "WWEzDUctPW6qeghIn0K9mI51uOHejCUP_20170408220543_api.mobile-api.ru",
+									"key": "mmbsid"
+								},
+								{
+									"expires": "Mon Jan 18 2038 20:14:07 GMT+0100 (Mitteleuropäische Zeit)",
+									"httpOnly": false,
+									"domain": "api.mobile-api.ru",
+									"path": "/",
+									"secure": false,
+									"value": "pXcFJSylaw7K4hDW64GOF6PtS2OQoJhh",
+									"key": "s_post"
+								}
+							],
+							"responseTime": "332",
+							"body": "{\"isAuth\":true,\"message\":\"Nachricht wurde gesendet\",\"profile\":{\"id\":1745679977,\"name\":\"Swappi\",\"login\":\"mb1745679977\",\"isVip\":false,\"vipTo\":null,\"isVipSubscribe\":false,\"accountBalance\":0,\"placeOn\":true,\"place\":0,\"placeHint\":\"\",\"squarePhotoUrl\":\"https:\\/\\/ams2.wmbcdn.com\\/77\\/99\\/76\\/1745679977\\/1760374150_square.jpg?hash=MxU5CMx30li_mqzl2vXhcg&expires=64060578000&updated=1491740861\",\"smallPhotoUrl\":\"https:\\/\\/ams2.wmbcdn.com\\/77\\/99\\/76\\/1745679977\\/1760374150_square_small.jpg?hash=ak4iksPhcgs-wVv9WoPzgw&expires=64060578000&updated=1491740861\",\"unreadMessages\":0,\"unreadNotifications\":0,\"newVisits\":0,\"confirmType\":\"email\",\"location\":{\"country_id\":1012},\"gender\":\"M\",\"canModerateComments\":false,\"age\":29,\"isPhoneNumberConfirmed\":false,\"divaAvailable\":0,\"incognitoIsOn\":false,\"hasDefaultPhoto\":true,\"photo\":{\"id\":1760374150,\"name\":\"\",\"erotic\":false,\"smallPhotoUrl\":\"https:\\/\\/ams2.wmbcdn.com\\/77\\/99\\/76\\/1745679977\\/1760374150_square_small.jpg?hash=ak4iksPhcgs-wVv9WoPzgw&expires=64060578000&updated=1491740861\",\"mediumPhotoUrl\":\"https:\\/\\/ams2.wmbcdn.com\\/77\\/99\\/76\\/1745679977\\/1760374150_square_small.jpg?hash=ak4iksPhcgs-wVv9WoPzgw&expires=64060578000&updated=1491740861\",\"hugePhotoUrl\":\"https:\\/\\/ams2.wmbcdn.com\\/77\\/99\\/76\\/1745679977\\/1760374150_huge.jpg?hash=Ri9mLuOahGTmpzn-U1AUqg&expires=64060578000&updated=1491740861\",\"largePhotoUrl\":\"https:\\/\\/ams2.wmbcdn.com\\/77\\/99\\/76\\/1745679977\\/1760374150_huge.jpg?hash=Ri9mLuOahGTmpzn-U1AUqg&expires=64060578000&updated=1491740861\",\"squarePhotoUrl\":\"https:\\/\\/ams2.wmbcdn.com\\/77\\/99\\/76\\/1745679977\\/1760374150_square.jpg?hash=MxU5CMx30li_mqzl2vXhcg&expires=64060578000&updated=1491740861\",\"squareSmallPhotoUrl\":\"https:\\/\\/ams2.wmbcdn.com\\/77\\/99\\/76\\/1745679977\\/1760374150_square_small.jpg?hash=ak4iksPhcgs-wVv9WoPzgw&expires=64060578000&updated=1491740861\",\"ratingId\":0,\"albumId\":1751596661,\"width\":600,\"height\":800,\"default\":true,\"squareLargePhotoUrl\":\"https:\\/\\/ams2.wmbcdn.com\\/77\\/99\\/76\\/1745679977\\/1760374150_square_large.jpg?hash=kr-dnnrHeJnc7l3LTupvzw&expires=64060578000&updated=1491740861\",\"status\":\"Approved\",\"canDefault\":false,\"isReject\":false,\"isRatingRejected\":false},\"autoDetectEnabled\":true},\"clientNotice\":{\"showCpa\":false,\"showPromoLayer\":true}}"
+						}
+					]
+				},
+				{
+					"name": "{id}/chat",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Cookie",
+								"value": "real_promo_1745679977=show;mmbsid=DyxjW06M4LxFbWSuv3RUS2cSVk2N2gC8_20170514132118_api.mobile-api.ru;return_token=yQpFfuZyE1F0sKC0sM8UIFroEvUg8umr; start_with_auth_form=1; unauth_lang=5; LOGIN=mb1745679977; registered_once=1;"
+							},
+							{
+								"key": "User-Agent",
+								"value": "okhttp/2.2.0"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "api.mobile-api.ru/v5.2.38.0/users/996784956/chat/?limit=20&offset=0&langId=de&dateType=timestamp HTTP/1.1",
+							"host": [
+								"api",
+								"mobile-api",
+								"ru"
+							],
+							"path": [
+								"v5.2.38.0",
+								"users",
+								"996784956",
+								"chat",
+								""
+							],
+							"query": [
+								{
+									"key": "limit",
+									"value": "20"
+								},
+								{
+									"key": "offset",
+									"value": "0"
+								},
+								{
+									"key": "langId",
+									"value": "de"
+								},
+								{
+									"key": "dateType",
+									"value": "timestamp HTTP/1.1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "{id}",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "User-Agent",
+								"value": "okhttp/2.2.0"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "https://api.mobile-api.ru/v5.2.38.0/users/996784956/?makeHit=false&langId=de&dateType=timestamp",
+							"protocol": "https",
+							"host": [
+								"api",
+								"mobile-api",
+								"ru"
+							],
+							"path": [
+								"v5.2.38.0",
+								"users",
+								"996784956",
+								""
+							],
+							"query": [
+								{
+									"key": "makeHit",
+									"value": "false"
+								},
+								{
+									"key": "langId",
+									"value": "de"
+								},
+								{
+									"key": "dateType",
+									"value": "timestamp"
+								}
+							]
+						},
+						"description": "Generated from a curl request: \ncurl -i -s -k  -X $'GET' \\\n    -H $'User-Agent: okhttp/2.2.0' \\\n    -b $'real_promo_1745679977=show; mmbsid=aaKUzqHDmeRcp4UjS70narJVhMWrMWJ0_20170408142902_api.mobile-api.ru; start_with_auth_form=1; s_post=H4vCKFrbL7ITY7PMPpJ2TBVIwPiQT6TQ; unauth_lang=5; LOGIN=mb1745679977; registered_once=1; return_token=IIwgJbaOZfCOq0BTMHLlzTOvPel4r0d6' \\\n    $'https://api.mobile-api.ru/v5.2.38.0/users/996784956/?makeHit=false&langId=de&dateType=timestamp'"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "search",
+			"description": "",
+			"item": [
+				{
+					"name": "users",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Cookie",
+								"value": "real_promo_1745679977=show; mmbsid=aaKUzqHDmeRcp4UjS70narJVhMWrMWJ0_20170408142902_api.mobile-api.ru; start_with_auth_form=1; s_post=H4vCKFrbL7ITY7PMPpJ2TBVIwPiQT6TQ; unauth_lang=5; LOGIN=mb1745679977; registered_once=1; return_token=tYezMB4S5UHJAkdUSQSozM8NE0RPpT1Q"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json; charset=UTF-8"
+							},
+							{
+								"key": "Content-Length",
+								"value": "234",
+								"disabled": true
+							},
+							{
+								"key": "Host",
+								"value": "api.mobile-api.ru"
+							},
+							{
+								"key": "Connection",
+								"value": "close"
+							},
+							{
+								"key": "Cookie",
+								"value": "real_promo_1745679977=show; mmbsid=aaKUzqHDmeRcp4UjS70narJVhMWrMWJ0_20170408142902_api.mobile-api.ru; start_with_auth_form=1; s_post=H4vCKFrbL7ITY7PMPpJ2TBVIwPiQT6TQ; unauth_lang=5; LOGIN=mb1745679977; registered_once=1; return_token=tYezMB4S5UHJAkdUSQSozM8NE0RPpT1Q"
+							},
+							{
+								"key": "User-Agent",
+								"value": "okhttp/2.2.0"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\\\"filter\\\":\\\"active\\\",\\\"search\\\":\\\"\\\",\\\"limit\\\":40,\\\"dateType\\\":\\\"timestamp\\\",\\\"lang_id\\\":\\\"de\\\",\\\"lat\\\":53.599815,\\\"lng\\\":9.933121}"
+						},
+						"url": {
+							"raw": "https://api.mobile-api.ru/v5.2.38.0/search/?langId=de&dateType=timestamp",
+							"protocol": "https",
+							"host": [
+								"api",
+								"mobile-api",
+								"ru"
+							],
+							"path": [
+								"v5.2.38.0",
+								"search",
+								""
+							],
+							"query": [
+								{
+									"key": "langId",
+									"value": "de"
+								},
+								{
+									"key": "dateType",
+									"value": "timestamp"
+								}
+							]
+						},
+						"description": "search workflow 1"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "promo",
+			"description": "",
+			"item": [
+				{
+					"name": "promo",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "User-Agent",
+								"value": "okhttp/2.2.0"
+							},
+							{
+								"key": "Cookie",
+								"value": "real_promo_1745679977=show; mmbsid=aaKUzqHDmeRcp4UjS70narJVhMWrMWJ0_20170408142902_api.mobile-api.ru; start_with_auth_form=1; s_post=H4vCKFrbL7ITY7PMPpJ2TBVIwPiQT6TQ; unauth_lang=5; LOGIN=mb1745679977; registered_once=1; return_token=zyc9GzoCbVqEF4PbTm9LPm61oPek1lSA"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "https://api.mobile-api.ru/v5.2.38.0/promo/?langId=de&dateType=timestamp",
+							"protocol": "https",
+							"host": [
+								"api",
+								"mobile-api",
+								"ru"
+							],
+							"path": [
+								"v5.2.38.0",
+								"promo",
+								""
+							],
+							"query": [
+								{
+									"key": "langId",
+									"value": "de"
+								},
+								{
+									"key": "dateType",
+									"value": "timestamp"
+								}
+							]
+						},
+						"description": "get Promo -> search refresh workflow"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "contacts",
+			"description": "",
+			"item": [
+				{
+					"name": "all",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "User-Agent",
+								"value": "okhttp/2.2.0"
+							},
+							{
+								"key": "Connection",
+								"value": "close"
+							},
+							{
+								"key": "Host",
+								"value": "api.mobile-api.ru"
+							},
+							{
+								"key": "Cookie",
+								"value": "mmbsid=CP8pJO6zvCDTalpjKziFUGBhW48DSHxi_20170514133138_api.mobile-api.ru; unauth_lang=5; LOGIN=mb1395694474;"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "https://api.mobile-api.ru/v5.2.38.0/contacts/all/?status=all&limit=20&offset=0&lastMessage=true&langId=de&dateType=timestamp",
+							"protocol": "https",
+							"host": [
+								"api",
+								"mobile-api",
+								"ru"
+							],
+							"path": [
+								"v5.2.38.0",
+								"contacts",
+								"all",
+								""
+							],
+							"query": [
+								{
+									"key": "status",
+									"value": "all"
+								},
+								{
+									"key": "limit",
+									"value": "20"
+								},
+								{
+									"key": "offset",
+									"value": "0"
+								},
+								{
+									"key": "lastMessage",
+									"value": "true"
+								},
+								{
+									"key": "langId",
+									"value": "de"
+								},
+								{
+									"key": "dateType",
+									"value": "timestamp"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "folders",
+			"description": "",
+			"item": [
+				{
+					"name": "folders",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "User-Agent",
+								"value": "okhttp/2.2.0"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "https://api.mobile-api.ru/v5.2.38.0/folders/?langId=de&dateType=timestamp",
+							"protocol": "https",
+							"host": [
+								"api",
+								"mobile-api",
+								"ru"
+							],
+							"path": [
+								"v5.2.38.0",
+								"folders",
+								""
+							],
+							"query": [
+								{
+									"key": "langId",
+									"value": "de"
+								},
+								{
+									"key": "dateType",
+									"value": "timestamp"
+								}
+							]
+						},
+						"description": "Generated from a curl request: \ncurl -i -s -k  -X $'GET' \\\n    -H $'User-Agent: okhttp/2.2.0' \\\n    -b $'real_promo_1745679977=show; mmbsid=aaKUzqHDmeRcp4UjS70narJVhMWrMWJ0_20170408142902_api.mobile-api.ru; start_with_auth_form=1; s_post=H4vCKFrbL7ITY7PMPpJ2TBVIwPiQT6TQ; unauth_lang=5; LOGIN=mb1745679977; registered_once=1; return_token=gjSakylOyUtPlY3J1spDRw9wBCHzmrHk' \\\n    $'https://api.mobile-api.ru/v5.2.38.0/folders/?langId=de&dateType=timestamp'"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "profiles",
+			"description": "",
+			"item": [
+				{
+					"name": "my/search",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Mamba-Client",
+								"value": "{\\\"brand\\\":\\\"Mamba\\\",\\\"build\\\":38,\\\"platform\\\":\\\"Android\\\"}"
+							},
+							{
+								"key": "Qapibara-Feature-Flags",
+								"value": "[\\\"wrapResponseInObject\\\"]"
+							},
+							{
+								"key": "Csrf-Token",
+								"value": "H4vCKFrbL7ITY7PMPpJ2TBVIwPiQT6TQ"
+							},
+							{
+								"key": "User-Agent",
+								"value": "okhttp/2.2.0"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://api.mobile-api.ru/v6/profiles/my/search/place/?_loc%5Blocale%5D=de_DE",
+							"protocol": "http",
+							"host": [
+								"api",
+								"mobile-api",
+								"ru"
+							],
+							"path": [
+								"v6",
+								"profiles",
+								"my",
+								"search",
+								"place",
+								""
+							],
+							"query": [
+								{
+									"key": "_loc%5Blocale%5D",
+									"value": "de_DE"
+								}
+							]
+						},
+						"description": "Generated from a curl request: \ncurl -i -s -k  -X $'GET' \\\n    -H $'Mamba-Client: {\\\\\"brand\\\\\":\\\\\"Mamba\\\\\",\\\\\"build\\\\\":38,\\\\\"platform\\\\\":\\\\\"Android\\\\\"}' -H $'Qapibara-Feature-Flags: [\\\\\"wrapResponseInObject\\\\\"]' -H $'Csrf-Token: H4vCKFrbL7ITY7PMPpJ2TBVIwPiQT6TQ' -H $'User-Agent: okhttp/2.2.0' \\\n    -b $'real_promo_1745679977=show; mmbsid=aaKUzqHDmeRcp4UjS70narJVhMWrMWJ0_20170408142902_api.mobile-api.ru; start_with_auth_form=1; s_post=H4vCKFrbL7ITY7PMPpJ2TBVIwPiQT6TQ; unauth_lang=5; LOGIN=mb1745679977; registered_once=1; return_token=qOnJ2Yu8M2v44BST8SblaUo3x9q0nBix' \\\n    $'http://api.mobile-api.ru/v6/profiles/my/search/place/?_loc%5Blocale%5D=de_DE'"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "complaints",
+			"description": "",
+			"item": [
+				{
+					"name": "state",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Mamba-Client",
+								"value": "{\\\"brand\\\":\\\"Mamba\\\",\\\"build\\\":38,\\\"platform\\\":\\\"Android\\\"}"
+							},
+							{
+								"key": "Qapibara-Feature-Flags",
+								"value": "[\\\"wrapResponseInObject\\\"]"
+							},
+							{
+								"key": "Csrf-Token",
+								"value": "H4vCKFrbL7ITY7PMPpJ2TBVIwPiQT6TQ"
+							},
+							{
+								"key": "User-Agent",
+								"value": "okhttp/2.2.0"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://api.mobile-api.ru/v6/complaints/state/996784956/anketa/?_loc%5Blocale%5D=de_DE",
+							"protocol": "http",
+							"host": [
+								"api",
+								"mobile-api",
+								"ru"
+							],
+							"path": [
+								"v6",
+								"complaints",
+								"state",
+								"996784956",
+								"anketa",
+								""
+							],
+							"query": [
+								{
+									"key": "_loc%5Blocale%5D",
+									"value": "de_DE"
+								}
+							]
+						},
+						"description": "Generated from a curl request: \ncurl -i -s -k  -X $'GET' \\\n    -H $'Mamba-Client: {\\\\\"brand\\\\\":\\\\\"Mamba\\\\\",\\\\\"build\\\\\":38,\\\\\"platform\\\\\":\\\\\"Android\\\\\"}' -H $'Qapibara-Feature-Flags: [\\\\\"wrapResponseInObject\\\\\"]' -H $'Csrf-Token: H4vCKFrbL7ITY7PMPpJ2TBVIwPiQT6TQ' -H $'User-Agent: okhttp/2.2.0' \\\n    -b $'real_promo_1745679977=show; mmbsid=aaKUzqHDmeRcp4UjS70narJVhMWrMWJ0_20170408142902_api.mobile-api.ru; start_with_auth_form=1; s_post=H4vCKFrbL7ITY7PMPpJ2TBVIwPiQT6TQ; unauth_lang=5; LOGIN=mb1745679977; registered_once=1; return_token=IIwgJbaOZfCOq0BTMHLlzTOvPel4r0d6' \\\n    $'http://api.mobile-api.ru/v6/complaints/state/996784956/anketa/?_loc%5Blocale%5D=de_DE'"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "login",
+			"description": "",
+			"item": [
+				{
+					"name": "login",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "User-Agent",
+								"value": "okhttp/2.2.0"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"login\":{\"login\":\"nathalie.degtjanikov@gmail.com\",\"password\":\"Schokobanane123\"}}"
+						},
+						"url": {
+							"raw": "https://api.mobile-api.ru/v5.2.38.0/login/builder/?langId=de&dateType=timestamp",
+							"protocol": "https",
+							"host": [
+								"api",
+								"mobile-api",
+								"ru"
+							],
+							"path": [
+								"v5.2.38.0",
+								"login",
+								"builder",
+								""
+							],
+							"query": [
+								{
+									"key": "langId",
+									"value": "de"
+								},
+								{
+									"key": "dateType",
+									"value": "timestamp"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
