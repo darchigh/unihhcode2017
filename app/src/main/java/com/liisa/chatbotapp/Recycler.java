@@ -47,8 +47,7 @@ public class Recycler extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     @Override
     public int getItemViewType(int position) {
         ChatMessage message = messageArrayList.get(position);
-
-        return position;
+        return message.isIncoming() ? 0 : SELF;
     }
 
     @Override

@@ -60,7 +60,7 @@ public class ChatMessage extends AResponse {
     }
 
     public String getMessage() {
-        return message;
+        return mask(message);
     }
 
     public void setMessage(String message) {
