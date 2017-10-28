@@ -14,20 +14,35 @@ import java.util.ArrayList;
 
 
 public class Recycler extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+    private int SELF = 100;
     private ArrayList<Message> messageArrayList;
 
     public Recycler(ArrayList<Message> messageArrayList) {
         this.messageArrayList = messageArrayList;
-
     }
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView;
+            //itemView = LayoutInflater.from(parent.getContext())
+              //      .inflate(R.layout.chat_item, parent, false);
+        if (viewType == SELF) {
             itemView = LayoutInflater.from(parent.getContext())
-                    .inflate(R.layout.chat_item, parent, false);
-
+                    .inflate(R.layout.chatitem_user, parent, false);
+        } else {
+            itemView = LayoutInflater.from(parent.getContext())
+                    .inflate(R.layout.chatitem_watson, parent, false);
+        }
         return new ViewHolder(itemView);
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        Message message = messageArrayList.get(position);
+        if (message.getId().equals("1")) {
+            return SELF;
+        }
+        return position;
     }
 
     @Override
