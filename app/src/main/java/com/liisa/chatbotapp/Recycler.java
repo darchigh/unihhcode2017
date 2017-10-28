@@ -18,7 +18,6 @@ import java.util.ArrayList;
 public class Recycler extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private ArrayList<ChatMessage> messageArrayList;
-
     private int SELF = 100;
 
     public Recycler(ArrayList<ChatMessage> messageArrayList) {
@@ -28,8 +27,6 @@ public class Recycler extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView;
-        //itemView = LayoutInflater.from(parent.getContext())
-        //      .inflate(R.layout.chat_item, parent, false);
         if (viewType == SELF) {
             itemView = LayoutInflater.from(parent.getContext())
                     .inflate(R.layout.chatitem_user, parent, false);
@@ -43,7 +40,9 @@ public class Recycler extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     @Override
     public int getItemViewType(int position) {
         ChatMessage message = messageArrayList.get(position);
-  
+        if (message.getId()==1) {
+            return SELF;
+        }
         return position;
     }
 
