@@ -30,6 +30,9 @@ import android.support.v7.widget.RecyclerView;
 import android.widget.LinearLayout;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -66,7 +69,23 @@ public class ChatActivity extends ApiActivity {
         editMessage = (EditText) findViewById(R.id.messageInput);
         btnSend = (ImageButton) findViewById(R.id.sendMessageButton);
         recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
-        messageArrayList = new ArrayList<>();
+        messageArrayList = new ArrayList<ChatMessage>() {
+
+            @Override
+            public boolean add(ChatMessage o) {
+                boolean result = super.add(o);
+
+                // Automatisches sortieren der Liste beim Einfügen von neuen Objekten.
+                Collections.sort(this, new Comparator<ChatMessage>() {
+                    @Override
+                    public int compare(ChatMessage o1, ChatMessage o2) {
+                        return o1.getCreated() - o2.getCreated();
+                    }
+                });
+
+                return result;
+            }
+        };
         mAdapter = new Recycler(messageArrayList);
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);

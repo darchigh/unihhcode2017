@@ -1,5 +1,6 @@
 package com.liisa.chatbotapp;
 
+import android.support.v7.util.SortedList;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +10,9 @@ import android.widget.TextView;
 import com.chatbotapp.mambaObj.ChatMessage;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Comparator;
+import java.util.PriorityQueue;
 
 /**
  * Created by liisa_000 on 08/04/2017.
@@ -43,7 +47,7 @@ public class Recycler extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     @Override
     public int getItemViewType(int position) {
         ChatMessage message = messageArrayList.get(position);
-  
+
         return position;
     }
 

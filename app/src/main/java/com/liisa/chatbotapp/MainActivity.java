@@ -53,7 +53,7 @@ public class MainActivity extends ApiActivity {
         refreshButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-            //TODO refresh messagelist
+                getContacts();
             }
         });
 
@@ -73,22 +73,32 @@ public class MainActivity extends ApiActivity {
 
     @Override
     protected void onApiAvailable() {
+        getContacts();
+    }
+
+    @Override
+    protected void onApiUnavailable() {
+
+    }
+
+
+    private void getContacts() {
         try {
+            adapter.clear();
+
             String email = "nathalie.degtjanikov@gmail.com";
             String password = "Schokobanane123";
 
             apiService.getApi().logon(email, password, new MambaWebApi.IResponse<Logon>() {
                 @Override
                 public void doResponse(Logon logon) {
-                    Log.i("MambaWebApi", "Logon successful: " + logon.isSuccessful());
+                    try {
+                        Log.i("MambaWebApi", "Logon successful: " + logon.isSuccessful());
 
-                    if (logon.isSuccessful()) {
-                        try {
+                        if (logon.isSuccessful()) {
                             apiService.getApi().getContacts(new MambaWebApi.IResponse<Contacts>() {
                                 @Override
                                 public void doResponse(Contacts contacts) {
-                                    adapter.clear();
-
                                     // Absteigende Sortierung --> D.h. neue Einträge werden als erstes angezeigt.
                                     Arrays.sort(contacts.getContacts(), new Comparator<Contact>() {
                                         @Override
@@ -103,19 +113,16 @@ public class MainActivity extends ApiActivity {
                                     }
                                 }
                             });
-                        } catch (Exception e) {
-                            e.printStackTrace();
                         }
+                    } catch (Exception e) {
+                        Toast.makeText(getApplicationContext(), "ERROR: " + e.getMessage(), Toast.LENGTH_LONG);
+                        e.printStackTrace();
                     }
                 }
             });
         } catch (Exception e) {
+            Toast.makeText(getApplicationContext(), "ERROR: " + e.getMessage(), Toast.LENGTH_LONG);
             e.printStackTrace();
         }
-    }
-
-    @Override
-    protected void onApiUnavailable() {
-
     }
 }
