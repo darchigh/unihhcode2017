@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -25,6 +26,7 @@ import java.util.ArrayList;
 public class MainActivity extends ApiActivity {
     ArrayList<Contact> myListItems = new ArrayList<>();
     ImageButton statistics;
+    Button refreshButton;
     private ArrayAdapter adapter;
 
     @Override
@@ -33,6 +35,7 @@ public class MainActivity extends ApiActivity {
         setContentView(R.layout.main_activity);
       //  comeToChatView = (Button) findViewById(R.id.button);
         statistics = (ImageButton) findViewById(R.id.statistics);
+        refreshButton = (Button) findViewById(R.id.refreshButton);
         adapter = new ArrayAdapter(this, R.layout.listview, myListItems);
         final ListView listOfMessages = (ListView) findViewById(R.id.list_view_messages);
         listOfMessages.setAdapter(adapter);
@@ -42,6 +45,13 @@ public class MainActivity extends ApiActivity {
             public void onClick(View v) {
                 Intent myIntent = new Intent(MainActivity.this, StatisticsActivity.class);
                 MainActivity.this.startActivity(myIntent);
+            }
+        });
+
+        refreshButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+            //TODO refresh messagelist
             }
         });
 
