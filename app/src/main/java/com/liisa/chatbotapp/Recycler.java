@@ -6,6 +6,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.chatbotapp.mambaObj.ChatMessage;
+
 import java.util.ArrayList;
 
 /**
@@ -14,9 +16,9 @@ import java.util.ArrayList;
 
 
 public class Recycler extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
-    private ArrayList<Message> messageArrayList;
+    private ArrayList<ChatMessage> messageArrayList;
 
-    public Recycler(ArrayList<Message> messageArrayList) {
+    public Recycler(ArrayList<ChatMessage> messageArrayList) {
         this.messageArrayList = messageArrayList;
 
     }
@@ -32,7 +34,7 @@ public class Recycler extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     @Override
     public void onBindViewHolder(final RecyclerView.ViewHolder holder, int position) {
-        Message message = messageArrayList.get(position);
+        ChatMessage message = messageArrayList.get(position);
         message.setMessage(message.getMessage());
         ((ViewHolder) holder).message.setText(message.getMessage());
     }

@@ -5,11 +5,13 @@ import com.google.gson.GsonBuilder;
 
 import org.json.JSONObject;
 
+import java.io.Serializable;
+
 /**
  * Created by aossa on 08.04.2017.
  */
 
-public abstract class AResponse {
+public abstract class AResponse implements Serializable {
 
 
     public static Gson GSON = new GsonBuilder().create();

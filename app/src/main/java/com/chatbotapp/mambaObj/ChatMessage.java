@@ -66,4 +66,11 @@ public class ChatMessage extends AResponse {
     public void setMessage(String message) {
         this.message = message;
     }
+
+
+    @Override
+    public String toString() {
+        return (incoming ? "--> " : "<-- ") + getMessage();
+
+    }
 }

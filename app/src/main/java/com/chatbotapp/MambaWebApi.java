@@ -118,9 +118,13 @@ public class MambaWebApi {
         return result;
     }
 
-
     public AsyncTask getChat(String userId, final IResponse<ChatMessages> response) throws Exception {
         return getChat(userId, DEFAULT_LIMIT, 0, response); // Default values from the request.
+    }
+
+
+    public AsyncTask getChat(int userId, final IResponse<ChatMessages> response) throws Exception {
+        return getChat(String.valueOf(userId), DEFAULT_LIMIT, 0, response); // Default values from the request.
     }
 
 

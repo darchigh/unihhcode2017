@@ -4,13 +4,24 @@ import android.content.Context;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
+
+import com.chatbotapp.ApiActivity;
+import com.chatbotapp.MambaWebApi;
+import com.chatbotapp.mambaObj.ChatMessage;
+import com.chatbotapp.mambaObj.ChatMessages;
+import com.chatbotapp.mambaObj.Contact;
+import com.chatbotapp.mambaObj.Contacts;
+import com.chatbotapp.mambaObj.Logon;
+import com.chatbotapp.mambaObj.User;
 import com.ibm.watson.developer_cloud.conversation.v1.ConversationService;
 import com.ibm.watson.developer_cloud.conversation.v1.model.MessageRequest;
 import com.ibm.watson.developer_cloud.conversation.v1.model.MessageResponse;
 import com.ibm.mobilefirstplatform.clientsdk.android.core.api.BMSClient;
+
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
@@ -18,7 +29,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class ChatActivity extends AppCompatActivity {
+public class ChatActivity extends ApiActivity {
 
     private RecyclerView recyclerView;
     private Context mContext;
@@ -27,15 +38,19 @@ public class ChatActivity extends AppCompatActivity {
     private String conversation_username;
     private String conversation_password;
     private EditText editMessage;
-    private ArrayList messageArrayList;
+    private ArrayList<ChatMessage> messageArrayList;
     private ImageButton btnSend;
     private Map<String, Object> context = new HashMap<>();
     private BMSClient bmsClient;
+    private User user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.chat_activity);
+
+        if (getIntent().hasExtra("user"))
+            user = (User) getIntent().getSerializableExtra("user");
 
         mContext = getApplicationContext();
         conversation_username = mContext.getString(R.string.conversation_username);
@@ -64,12 +79,14 @@ public class ChatActivity extends AppCompatActivity {
                 editMessage.setText("");
             }
         });
-                }
+
+    }
+
     private void sendMessage() {
         final String inputMessage = this.editMessage.getText().toString().trim();
-        Message imessage = new Message();
+        ChatMessage imessage = new ChatMessage();
         imessage.setMessage(inputMessage);
-        imessage.setId("1");
+        imessage.setId(1);
         messageArrayList.add(imessage);
         mAdapter.notifyDataSetChanged();
 
@@ -86,14 +103,14 @@ public class ChatActivity extends AppCompatActivity {
                         context = response.getContext();
 
                     }
-                    Message outMessage = new Message();
+                    ChatMessage outMessage = new ChatMessage();
                     if (response != null) {
                         if (response.getOutput() != null && response.getOutput().containsKey("text")) {
 
                             ArrayList responseList = (ArrayList) response.getOutput().get("text");
                             if (null != responseList && responseList.size() > 0) {
                                 outMessage.setMessage((String) responseList.get(0));
-                                outMessage.setId("2");
+                                outMessage.setId(2);
                             }
                             messageArrayList.add(outMessage);
                         }
@@ -112,5 +129,44 @@ public class ChatActivity extends AppCompatActivity {
             }
         });
         thread.start();
+    }
+
+    @Override
+    protected void onApiAvailable() {
+        try {
+            String email = "nathalie.degtjanikov@gmail.com";
+            String password = "Schokobanane123";
+
+            apiService.getApi().logon(email, password, new MambaWebApi.IResponse<Logon>() {
+                @Override
+                public void doResponse(Logon logon) {
+                    Log.i("MambaWebApi", "Logon successful: " + logon.isSuccessful());
+
+                    if (logon.isSuccessful()) {
+                        try {
+                            apiService.getApi().getChat(user.getId(), new MambaWebApi.IResponse<ChatMessages>() {
+                                @Override
+                                public void doResponse(ChatMessages result) {
+                                    for (ChatMessage msg : result.getMessages()) {
+                                        messageArrayList.add(msg);
+                                    }
+
+                                    mAdapter.notifyDataSetChanged();
+                                }
+                            });
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    protected void onApiUnavailable() {
+
     }
 }

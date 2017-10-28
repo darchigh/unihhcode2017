@@ -17,6 +17,8 @@ import com.chatbotapp.mambaObj.Contacts;
 import com.chatbotapp.mambaObj.Logon;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Comparator;
 
 /**
  * Created by liisa_000 on 09/04/2017.
@@ -31,7 +33,7 @@ public class MainActivity extends ApiActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_activity);
-      //  comeToChatView = (Button) findViewById(R.id.button);
+        //  comeToChatView = (Button) findViewById(R.id.button);
         statistics = (ImageButton) findViewById(R.id.statistics);
         adapter = new ArrayAdapter(this, R.layout.listview, myListItems);
         final ListView listOfMessages = (ListView) findViewById(R.id.list_view_messages);
@@ -49,10 +51,11 @@ public class MainActivity extends ApiActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view,
                                     final int position, long id) {
-                String main = listOfMessages.getItemAtPosition(position).toString();
-                Toast.makeText(getApplicationContext(), main.toString(), Toast.LENGTH_SHORT).show();
+                Contact contact = (Contact) listOfMessages.getItemAtPosition(position);
+                //Toast.makeText(getApplicationContext(), contact.toString(), Toast.LENGTH_SHORT).show();
+
                 Intent intent = new Intent(MainActivity.this, ChatActivity.class);
-                intent.putExtra("message", main);
+                intent.putExtra("user", contact.getAnketa());
                 startActivity(intent);
             }
         });
@@ -76,12 +79,18 @@ public class MainActivity extends ApiActivity {
                                 public void doResponse(Contacts contacts) {
                                     adapter.clear();
 
-                                    for(Contact contact: contacts.getContacts()) {
+                                    // Absteigende Sortierung --> D.h. neue Einträge werden als erstes angezeigt.
+                                    Arrays.sort(contacts.getContacts(), new Comparator<Contact>() {
+                                        @Override
+                                        public int compare(Contact o1, Contact o2) {
+                                            return o2.getLastMessageTimestamp() - o1.getLastMessageTimestamp();
+                                        }
+                                    });
+
+                                    for (Contact contact : contacts.getContacts()) {
                                         Log.i("MambaWebApi", "Add contact: " + contact.toJSON());
                                         adapter.add(contact);
                                     }
-
-
                                 }
                             });
                         } catch (Exception e) {
