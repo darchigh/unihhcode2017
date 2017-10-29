@@ -20,12 +20,10 @@ import com.chatbotapp.mambaObj.Logon;
 import com.chatbotapp.mambaObj.User;
 import com.chatbotapp.mambaObj.ChatMessage;
 
-import com.chatbotapp.watson.OnTaskCompleted;
 import com.ibm.watson.developer_cloud.conversation.v1.ConversationService;
 import com.ibm.watson.developer_cloud.conversation.v1.model.MessageRequest;
 import com.ibm.watson.developer_cloud.conversation.v1.model.MessageResponse;
 import com.ibm.mobilefirstplatform.clientsdk.android.core.api.BMSClient;
-import com.ibm.watson.developer_cloud.http.ServiceCallback;
 
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -39,14 +37,18 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class ChatActivity extends ApiActivity {
-    private RecyclerView recyclerView;
-    private Recycler mAdapter;
 
+    private RecyclerView recyclerView;
+    private Context mContext;
+    private String workspace_id;
+    private Recycler mAdapter;
+    private String conversation_username;
+    private String conversation_password;
     private EditText editMessage;
     private ArrayList<ChatMessage> messageArrayList;
     private ImageButton btnSend;
-
-
+    private Map<String, Object> context = new HashMap<>();
+    private BMSClient bmsClient;
     private User user;
 
     @Override
@@ -56,6 +58,13 @@ public class ChatActivity extends ApiActivity {
 
         if (getIntent().hasExtra("user"))
             user = (User) getIntent().getSerializableExtra("user");
+
+        mContext = getApplicationContext();
+        conversation_username = mContext.getString(R.string.conversation_username);
+        conversation_password = mContext.getString(R.string.conversation_password);
+        workspace_id = mContext.getString(R.string.workspace_id);
+        bmsClient = BMSClient.getInstance();
+
 
         editMessage = (EditText) findViewById(R.id.messageInput);
         btnSend = (ImageButton) findViewById(R.id.sendMessageButton);
@@ -89,48 +98,63 @@ public class ChatActivity extends ApiActivity {
         btnSend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final String inputMessage = editMessage.getText().toString().trim();
-                ChatMessage imessage = new ChatMessage();
-                imessage.setMessage(inputMessage);
-                imessage.setId(1);
-                messageArrayList.add(imessage);
-                mAdapter.notifyDataSetChanged();
-                sendMessageToWatson(editMessage.getText().toString().trim(), user.getUserId());
+                sendMessage();
                 editMessage.setText("");
             }
         });
 
     }
 
-    private void sendMessageToWatson(String input, int userId) {
-        apiService.sendMessageToWatson(input, userId, new ServiceCallback<MessageResponse>() {
-            @Override
-            public void onResponse(MessageResponse response) {
-                ChatMessage outMessage = new ChatMessage();
-                if (response != null) {
-                    if (response.getOutput() != null && response.getOutput().containsKey("text")) {
+    private void sendMessage() {
+        final String inputMessage = this.editMessage.getText().toString().trim();
+        ChatMessage imessage = new ChatMessage();
+        imessage.setMessage(inputMessage);
+        imessage.setId(1);
+        messageArrayList.add(imessage);
+        mAdapter.notifyDataSetChanged();
 
-                        ArrayList responseList = (ArrayList) response.getOutput().get("text");
-                        if (null != responseList && responseList.size() > 0) {
-                            outMessage.setMessage((String) responseList.get(0));
-                            outMessage.setId(2);
+        Thread thread = new Thread(new Runnable() {
+            public void run() {
+                try {
+                    ConversationService service = new ConversationService(ConversationService.VERSION_DATE_2016_07_11);
+                    service.setUsernameAndPassword(conversation_username, conversation_password);
+                    MessageRequest newMessage = new MessageRequest.Builder().inputText(inputMessage).context(context).build();
+                    MessageResponse response = service.message(workspace_id, newMessage).execute();
+                    //Thread.sleep(10000);
+                    if (response.getContext() != null) {
+                        context.clear();
+                        context = response.getContext();
+                    }
+
+                    ChatMessage outMessage = new ChatMessage();
+                    if (response != null) {
+                        if (response.getOutput() != null && response.getOutput().containsKey("text")) {
+
+                            ArrayList responseList = (ArrayList) response.getOutput().get("text");
+                            if (null != responseList && responseList.size() > 0) {
+                                outMessage.setMessage((String) responseList.get(0));
+                                outMessage.setId(2);
+                            }
+                            messageArrayList.add(outMessage);
                         }
-                        messageArrayList.add(outMessage);
-                    }
-                    mAdapter.notifyDataSetChanged();
-                    if (mAdapter.getItemCount() > 1) {
-                        recyclerView.getLayoutManager().smoothScrollToPosition(recyclerView, null, mAdapter.getItemCount() - 1);
+                        runOnUiThread(new Runnable() {
+                            public void run() {
+                                mAdapter.notifyDataSetChanged();
+                                if (mAdapter.getItemCount() > 1) {
+                                    recyclerView.getLayoutManager().smoothScrollToPosition(recyclerView, null, mAdapter.getItemCount() - 1);
 
+                                }
+                            }
+                        });
                     }
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
             }
-
-            @Override
-            public void onFailure(Exception e) {
-
-            }
         });
+        thread.start();
     }
+
 
     @Override
     protected void onApiAvailable() {

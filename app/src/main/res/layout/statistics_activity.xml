@@ -3,40 +3,33 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent" android:layout_height="match_parent">
 
-    <ImageButton
-        android:id="@+id/Barchart1"
-        android:layout_width="124dp"
-        android:layout_height="124dp"
-        app:srcCompat="@drawable/bar_chart"
-        android:layout_alignTop="@+id/Barchart2"
-        android:layout_alignStart="@+id/Barchart3" />
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-    <ImageButton
-        android:id="@+id/Barchart2"
-        android:layout_width="124dp"
-        android:layout_height="124dp"
-        android:layout_alignParentBottom="true"
-        android:layout_alignStart="@+id/Barchart4"
-        android:layout_marginBottom="92dp"
-        app:srcCompat="@drawable/bar_chart" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
 
-    <ImageButton
-        android:id="@+id/Barchart3"
-        android:layout_width="124dp"
-        android:layout_height="124dp"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginEnd="27dp"
-        android:layout_marginTop="65dp"
-        app:srcCompat="@drawable/bar_chart" />
+            <TextView
+                android:id="@+id/textView3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Statistiken" />
 
-    <ImageButton
-        android:id="@+id/Barchart4"
-        android:layout_width="124dp"
-        android:layout_height="124dp"
-        android:layout_alignParentStart="true"
-        android:layout_alignTop="@+id/Barchart3"
-        android:layout_marginStart="33dp"
-        app:srcCompat="@drawable/bar_chart" />
+            <Button
+                android:id="@+id/btnMessagePeriod"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Zeitraum eintreffender Nachrichten" />
+
+            <Button
+                android:id="@+id/btnMessageCount"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Verhältnis ein-/ausgehender Nachrichten" />
+        </LinearLayout>
+    </ScrollView>
 
 </RelativeLayout>

@@ -66,6 +66,7 @@ public class MambaWebApi {
             data += "}";
 
             result = query(response, Logon.class, CREATE_REQ, "v5.2.38.0/login/builder/", null, data);
+            result.execute(new Void[0]);
         } catch (Exception e) {
             Log.e(tag, "Failed to generate the result of a logon-request.", e);
             throw e;
@@ -90,6 +91,7 @@ public class MambaWebApi {
 
             result = query(response, ChatAcknowledge.class, CREATE_REQ,
                     "v5.2.38.0/users/" + receiverId + "/post/", null, data);
+            result.execute(new Void[0]);
         } catch (Exception e) {
             Log.e(tag, "Failed to generate the result of a sendMessage-request.", e);
             throw e;
@@ -110,6 +112,7 @@ public class MambaWebApi {
                     "v5.2.38.0/contacts/all/",
                     "?status=all&lastMessage=true&limit=" + limit + "&offset=" + offset,
                     null);
+            result.execute(new Void[0]);
         } catch (Exception e) {
             Log.e(tag, "Failed to generate the result of a getContacts-request.", e);
             throw e;
@@ -117,6 +120,13 @@ public class MambaWebApi {
 
         return result;
     }
+
+
+    public ChatMessages getChat(String userId) throws Exception {
+        AsyncTask task = getChatTask(userId, DEFAULT_LIMIT, 0, null);
+        return (ChatMessages) task.get();
+    }
+
 
     public AsyncTask getChat(String userId, final IResponse<ChatMessages> response) throws Exception {
         return getChat(userId, DEFAULT_LIMIT, 0, response); // Default values from the request.
@@ -129,6 +139,14 @@ public class MambaWebApi {
 
 
     public AsyncTask getChat(String userId, int limit, int offset, final IResponse<ChatMessages> response) throws Exception {
+        AsyncTask result = getChatTask(userId, limit, offset, response);
+        result.execute(new Void[0]);
+
+        return result;
+    }
+
+
+    private  AsyncTask getChatTask(String userId, int limit, int offset, final IResponse<ChatMessages> response) throws Exception {
         AsyncTask result;
 
         try {
@@ -161,6 +179,7 @@ public class MambaWebApi {
             data += "}";
 
             result = query(response, SearchResult.class, READ_REQ, "v5.2.38.0/search/", null, data);
+            result.execute(new Void[0]);
         } catch (Exception e) {
             Log.e(tag, "Failed to generate the result of a search-request.", e);
             throw e;
@@ -266,9 +285,13 @@ public class MambaWebApi {
 
                 return result;
             }
-        };
 
-        task.execute();
+            @Override
+            protected void onCancelled(T t) {
+                super.onCancelled(t);
+                Log.e(tag, "Request cancelled.");
+            }
+        };
 
         return task;
     }

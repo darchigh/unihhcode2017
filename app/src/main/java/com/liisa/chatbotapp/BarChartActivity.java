@@ -1,30 +1,25 @@
 package com.liisa.chatbotapp;
+
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
+import com.chatbotapp.BarchartWrapper;
 import com.github.mikephil.charting.charts.BarChart;
+import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.utils.ColorTemplate;
+import com.github.mikephil.charting.utils.ValueFormatter;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 public class BarChartActivity extends AppCompatActivity {
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.barchart_activity);
-        BarChart chart = (BarChart) findViewById(R.id.chart);
-
-        BarData data = new BarData(getXAxisValues(), getDataSet());
-        chart.setData(data);
-        chart.setDescription("My Chart");
-        chart.animateXY(2000, 2000);
-        chart.invalidate();
-    }
 
     private ArrayList<BarDataSet> getDataSet() {
         ArrayList<BarDataSet> dataSets = null;
@@ -77,5 +72,36 @@ public class BarChartActivity extends AppCompatActivity {
         xAxis.add("MAY");
         xAxis.add("JUN");
         return xAxis;
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.barchart_activity);
+        BarChart chart = (BarChart) findViewById(R.id.chart);
+
+        BarchartWrapper barchartWrapper = (BarchartWrapper) getIntent().getSerializableExtra("chart");
+
+        ArrayList<BarDataSet> barsets = new ArrayList<BarDataSet>();
+
+        for (Map.Entry<String, BarchartWrapper.WrapperBarSet> entry : barchartWrapper.getBarsets().entrySet()) {
+            ArrayList<BarEntry> dataSet = new ArrayList<>();
+
+            for (BarchartWrapper.WrapperBarValue value : barchartWrapper.getData().get(entry.getValue().getName())) {
+                dataSet.add(new BarEntry(value.getValue(), value.getxAxis()));
+            }
+
+            BarDataSet newBarDataSet = new BarDataSet(dataSet, entry.getValue().getName());
+            newBarDataSet.setColor(entry.getValue().getColor());
+
+            barsets.add(newBarDataSet);
+        }
+
+        //BarData data = new BarData(getXAxisValues(), getDataSet());
+        BarData data = new BarData(barchartWrapper.getxAxisCaption(), barsets);
+        chart.setData(data);
+        chart.animateXY(2000, 2000);
+        chart.getAxisRight().setEnabled(false);
+        chart.invalidate();
     }
 }
