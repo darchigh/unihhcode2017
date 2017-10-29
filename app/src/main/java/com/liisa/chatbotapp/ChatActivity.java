@@ -118,6 +118,7 @@ public class ChatActivity extends ApiActivity {
                 try {
                     ConversationService service = new ConversationService(ConversationService.VERSION_DATE_2016_07_11);
                     service.setUsernameAndPassword(conversation_username, conversation_password);
+                    service.setEndPoint("https://gateway-fra.watsonplatform.net/conversation/api");
                     MessageRequest newMessage = new MessageRequest.Builder().inputText(inputMessage).context(context).build();
                     MessageResponse response = service.message(workspace_id, newMessage).execute();
                     //Thread.sleep(10000);
