@@ -75,7 +75,7 @@ public class ChatActivity extends ApiActivity {
             @Override
             public void onClick(View v) {
                 // button should only be enabled when last msg is not ours -> set after init contacts
-                ChatMessage lastMsg = messageArrayList.get(messageArrayList.size() -1);
+                ChatMessage lastMsg = messageArrayList.get(0);
                 letWatsonAnswer(lastMsg.getMessage(), user.getUserId());
                 //then we send the last msg from the contact to watson, with user id. apiservice can continue context if exists
             }
@@ -160,8 +160,8 @@ public class ChatActivity extends ApiActivity {
                     for (ChatMessage msg : result.getMessages()) {
                         messageArrayList.add(msg);
                     }
-                    ChatMessage lastMessage = result.getMessages()[result.getMessages().length - 1];
-                    //watson can only answer chat messages. Chat will always have at least 1 msg
+                    ChatMessage lastMessage = result.getMessages()[0];
+                    //watson can only answer chat messages. Chat will always have at least 1 msg. Last msg is index 0
                     watsonButton.setEnabled(lastMessage.isIncoming());
                     mAdapter.notifyDataSetChanged();
                     if (mAdapter.getItemCount() > 1) {
