@@ -1,52 +1,37 @@
 package com.liisa.chatbotapp;
 
-import android.content.Context;
-import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.Toast;
 
 import com.chatbotapp.ApiActivity;
 import com.chatbotapp.MambaWebApi;
+import com.chatbotapp.mambaObj.ChatAcknowledge;
 import com.chatbotapp.mambaObj.ChatMessage;
 import com.chatbotapp.mambaObj.ChatMessages;
-import com.chatbotapp.mambaObj.Contact;
-import com.chatbotapp.mambaObj.Contacts;
 import com.chatbotapp.mambaObj.Logon;
 import com.chatbotapp.mambaObj.User;
-import com.chatbotapp.mambaObj.ChatMessage;
-
-import com.chatbotapp.watson.OnTaskCompleted;
-import com.ibm.watson.developer_cloud.conversation.v1.ConversationService;
-import com.ibm.watson.developer_cloud.conversation.v1.model.MessageRequest;
 import com.ibm.watson.developer_cloud.conversation.v1.model.MessageResponse;
-import com.ibm.mobilefirstplatform.clientsdk.android.core.api.BMSClient;
 import com.ibm.watson.developer_cloud.http.ServiceCallback;
 
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.widget.LinearLayout;
-
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.HashMap;
-import java.util.Map;
 
 public class ChatActivity extends ApiActivity {
     private RecyclerView recyclerView;
     private Recycler mAdapter;
-
     private EditText editMessage;
     private ArrayList<ChatMessage> messageArrayList;
     private ImageButton btnSend;
-
-
+    private Button watsonButton;
     private User user;
 
     @Override
@@ -59,9 +44,9 @@ public class ChatActivity extends ApiActivity {
 
         editMessage = (EditText) findViewById(R.id.messageInput);
         btnSend = (ImageButton) findViewById(R.id.sendMessageButton);
+        watsonButton = (Button) findViewById(R.id.watsonAnswerButton);
         recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
         messageArrayList = new ArrayList<ChatMessage>() {
-
             @Override
             public boolean add(ChatMessage o) {
                 boolean result = super.add(o);
@@ -86,48 +71,58 @@ public class ChatActivity extends ApiActivity {
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(mAdapter);
 
+        watsonButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // button should only be enabled when last msg is not ours -> set after init contacts
+                ChatMessage lastMsg = messageArrayList.get(messageArrayList.size() -1);
+                letWatsonAnswer(lastMsg.getMessage(), user.getUserId());
+                //then we send the last msg from the contact to watson, with user id. apiservice can continue context if exists
+            }
+        });
         btnSend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 final String inputMessage = editMessage.getText().toString().trim();
-                ChatMessage imessage = new ChatMessage();
-                imessage.setMessage(inputMessage);
-                imessage.setId(1);
-                messageArrayList.add(imessage);
-                mAdapter.notifyDataSetChanged();
-                sendMessageToWatson(editMessage.getText().toString().trim(), user.getUserId());
+                sendMessageToMamba(user.getUserId(), inputMessage);
                 editMessage.setText("");
             }
         });
 
     }
 
-    private void sendMessageToWatson(String input, int userId) {
+    private void sendMessageToMamba(int userId, String input) {
+        try {
+            apiService.getApi().sendMessage(userId, input, new MambaWebApi.IResponse<ChatAcknowledge>() {
+                @Override
+                public void doResponse(ChatAcknowledge result) {
+                    refreshMessages();
+                    //just refreshMessages messages. it should be there if it posted OK
+                }
+            });
+        } catch (Exception e) {
+            Toast.makeText(getApplicationContext(), "Error sending msg to mamba", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    /**
+     * See watson doc https://www.ibm.com/watson/developercloud/conversation/api/v1/#send_message
+     */
+    private void letWatsonAnswer(String input, final int userId) {
+        watsonButton.setEnabled(false);
         apiService.sendMessageToWatson(input, userId, new ServiceCallback<MessageResponse>() {
             @Override
             public void onResponse(MessageResponse response) {
-                ChatMessage outMessage = new ChatMessage();
-                if (response != null) {
-                    if (response.getOutput() != null && response.getOutput().containsKey("text")) {
-
-                        ArrayList responseList = (ArrayList) response.getOutput().get("text");
-                        if (null != responseList && responseList.size() > 0) {
-                            outMessage.setMessage((String) responseList.get(0));
-                            outMessage.setId(2);
-                        }
-                        messageArrayList.add(outMessage);
-                    }
-                    mAdapter.notifyDataSetChanged();
-                    if (mAdapter.getItemCount() > 1) {
-                        recyclerView.getLayoutManager().smoothScrollToPosition(recyclerView, null, mAdapter.getItemCount() - 1);
-
-                    }
+                if (response != null && response.getOutput() != null && response.getOutput().containsKey("text")) {
+                    ArrayList<String> responseList = (ArrayList) response.getOutput().get("text");
+                    String responseText = responseList.get(0);
+                    sendMessageToMamba(userId, responseText);
                 }
             }
 
             @Override
             public void onFailure(Exception e) {
-
+                Toast.makeText(getApplicationContext(), "Error sending msg to watson", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -137,27 +132,13 @@ public class ChatActivity extends ApiActivity {
         try {
             String email = "nathalie.degtjanikov@gmail.com";
             String password = "Schokobanane123";
-
             apiService.getApi().logon(email, password, new MambaWebApi.IResponse<Logon>() {
                 @Override
                 public void doResponse(Logon logon) {
                     Log.i("MambaWebApi", "Logon successful: " + logon.isSuccessful());
 
                     if (logon.isSuccessful()) {
-                        try {
-                            apiService.getApi().getChat(user.getId(), new MambaWebApi.IResponse<ChatMessages>() {
-                                @Override
-                                public void doResponse(ChatMessages result) {
-                                    for (ChatMessage msg : result.getMessages()) {
-                                        messageArrayList.add(msg);
-                                    }
-
-                                    mAdapter.notifyDataSetChanged();
-                                }
-                            });
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
+                        refreshMessages();
                     }
                 }
             });
@@ -168,7 +149,29 @@ public class ChatActivity extends ApiActivity {
 
     @Override
     protected void onApiUnavailable() {
-
     }
 
+    private void refreshMessages() {
+        try {
+            apiService.getApi().getChat(user.getId(), new MambaWebApi.IResponse<ChatMessages>() {
+                @Override
+                public void doResponse(ChatMessages result) {
+                    messageArrayList.clear();
+                    for (ChatMessage msg : result.getMessages()) {
+                        messageArrayList.add(msg);
+                    }
+                    ChatMessage lastMessage = result.getMessages()[result.getMessages().length - 1];
+                    //watson can only answer chat messages. Chat will always have at least 1 msg
+                    watsonButton.setEnabled(lastMessage.isIncoming());
+                    mAdapter.notifyDataSetChanged();
+                    if (mAdapter.getItemCount() > 1) {
+                        recyclerView.getLayoutManager().smoothScrollToPosition(recyclerView, null, mAdapter.getItemCount() - 1);
+
+                    }
+                }
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }

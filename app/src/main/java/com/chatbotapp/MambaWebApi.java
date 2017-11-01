@@ -76,7 +76,7 @@ public class MambaWebApi {
     }
 
 
-    public AsyncTask sendMessage(String receiverId, String message, final IResponse<ChatAcknowledge> response) throws Exception {
+    public AsyncTask sendMessage(int receiverId, String message, final IResponse<ChatAcknowledge> response) throws Exception {
         AsyncTask result = null;
 
         try {
