@@ -90,7 +90,7 @@ public class ApiService extends Service {
      * @param userId needed for mapping conversation state to user
      * @param callback callback handle for activity
      */
-    public void sendMessageToWatson(String inputMessage, final Integer userId, final ServiceCallback<MessageResponse> callback) {
+    public void sendMessageToWatson(String inputMessage, final int userId, final ServiceCallback<MessageResponse> callback) {
         MessageRequest.Builder b = new MessageRequest.Builder().inputText(inputMessage);
         if (userConversationMap.containsKey(userId)) {
             b.context(userConversationMap.get(userId));

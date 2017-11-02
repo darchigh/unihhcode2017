@@ -101,7 +101,12 @@ public class ChatActivity extends ApiActivity {
                 }
             });
         } catch (Exception e) {
-            Toast.makeText(getApplicationContext(), "Error sending msg to mamba", Toast.LENGTH_SHORT).show();
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    Toast.makeText(ChatActivity.this, "Error sending msg to mamba", Toast.LENGTH_SHORT).show();
+                }
+            });
         }
     }
 
@@ -122,7 +127,12 @@ public class ChatActivity extends ApiActivity {
 
             @Override
             public void onFailure(Exception e) {
-                Toast.makeText(getApplicationContext(), "Error sending msg to watson", Toast.LENGTH_SHORT).show();
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(ChatActivity.this, "Error sending msg to watson", Toast.LENGTH_SHORT).show();
+                    }
+                });
             }
         });
     }

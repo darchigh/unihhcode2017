@@ -28,6 +28,7 @@ import java.util.Comparator;
 public class MainActivity extends ApiActivity {
     ArrayList<Contact> myListItems = new ArrayList<>();
     ImageButton statistics;
+    ImageButton watson;
     Button refreshButton;
     private ArrayAdapter adapter;
 
@@ -37,6 +38,7 @@ public class MainActivity extends ApiActivity {
         setContentView(R.layout.main_activity);
         //  comeToChatView = (Button) findViewById(R.id.button);
         statistics = (ImageButton) findViewById(R.id.statistics);
+        watson = (ImageButton) findViewById(R.id.watson);
         refreshButton = (Button) findViewById(R.id.refreshButton);
         adapter = new ArrayAdapter(this, R.layout.listview, myListItems);
         final ListView listOfMessages = (ListView) findViewById(R.id.list_view_messages);
@@ -67,6 +69,13 @@ public class MainActivity extends ApiActivity {
                 Intent intent = new Intent(MainActivity.this, ChatActivity.class);
                 intent.putExtra("user", contact.getAnketa());
                 startActivity(intent);
+            }
+        });
+        watson.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent myIntent = new Intent(MainActivity.this, WatsonActivity.class);
+                MainActivity.this.startActivity(myIntent);
             }
         });
     }
