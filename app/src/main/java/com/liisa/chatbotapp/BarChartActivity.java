@@ -100,6 +100,7 @@ public class BarChartActivity extends AppCompatActivity {
         //BarData data = new BarData(getXAxisValues(), getDataSet());
         BarData data = new BarData(barchartWrapper.getxAxisCaption(), barsets);
         chart.setData(data);
+        chart.setDescription("");
         chart.animateXY(2000, 2000);
         chart.getAxisRight().setEnabled(false);
         chart.invalidate();

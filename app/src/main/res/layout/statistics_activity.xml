@@ -25,6 +25,12 @@
                 android:text="Zeitraum eintreffender Nachrichten" />
 
             <Button
+                android:id="@+id/btnAge"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Altersgruppen" />
+
+            <Button
                 android:id="@+id/btnMessageCount"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
