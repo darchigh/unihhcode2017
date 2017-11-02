@@ -18,7 +18,7 @@ import java.util.ArrayList;
 public class Recycler extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private ArrayList<ChatMessage> messageArrayList;
-    private int SELF = 100;
+    private int SELF = 1;
 
     public Recycler(ArrayList<ChatMessage> messageArrayList) {
         this.messageArrayList = messageArrayList;
@@ -40,10 +40,11 @@ public class Recycler extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     @Override
     public int getItemViewType(int position) {
         ChatMessage message = messageArrayList.get(position);
-        if (message.getId()==1) {
+        if (message.isIncoming()) {
+            return position;
+        } else {
             return SELF;
         }
-        return position;
     }
 
     @Override
