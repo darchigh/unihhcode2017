@@ -94,7 +94,12 @@ public class Contact extends AResponse {
         }
         String lastmsg= "no msg";
         if (getLastNessage() != null) {
-            lastmsg = mask(getLastNessage().getMessage());
+            if (!getLastNessage().isIncoming()) {
+                lastmsg = "Du: ";
+            } else {
+                lastmsg = "";
+            }
+            lastmsg += mask(getLastNessage().getMessage());
         }
 
         return name + " - " +lastmsg;
