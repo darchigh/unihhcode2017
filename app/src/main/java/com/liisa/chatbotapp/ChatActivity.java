@@ -76,6 +76,7 @@ public class ChatActivity extends ApiActivity {
             public void onClick(View v) {
                 // button should only be enabled when last msg is not ours -> set after init contacts
                 ChatMessage lastMsg = messageArrayList.get(0);
+                Log.d("liisa.chatbotapp", "onClick: sending lastMsg to Watson: " + lastMsg.toJSON());
                 letWatsonAnswer(lastMsg.getMessage(), user.getUserId());
                 //then we send the last msg from the contact to watson, with user id. apiservice can continue context if exists
             }

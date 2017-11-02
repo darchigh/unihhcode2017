@@ -19,6 +19,7 @@ public class Recycler extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private ArrayList<ChatMessage> messageArrayList;
     private int SELF = 1;
+    private int OTHER = 0;
 
     public Recycler(ArrayList<ChatMessage> messageArrayList) {
         this.messageArrayList = messageArrayList;
@@ -41,7 +42,7 @@ public class Recycler extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     public int getItemViewType(int position) {
         ChatMessage message = messageArrayList.get(position);
         if (message.isIncoming()) {
-            return position;
+            return OTHER;
         } else {
             return SELF;
         }
